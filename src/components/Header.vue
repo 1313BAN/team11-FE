@@ -5,8 +5,8 @@
     <div class="flex items-center gap-2">
       <button>로고</button>
       <template v-if="!isLogin">
-        <button>로그인</button>
-        <button>회원가입</button>
+        <button @click="showLogin = true">로그인</button>
+        <button @click="showSignup = true">회원가입</button>
       </template>
       <template v-else>
         <span class="text-sm">{{ username }}님 안녕하세요</span>
@@ -19,13 +19,25 @@
       <router-link to="/board">Board</router-link>
       <router-link to="/mypage">My Page</router-link>
     </nav>
+
+    <!-- 로그인 모달 -->
+    <LoginModal v-if="showLogin" @close="showLogin = false" />
+
+    <!-- 회원가입 모달 -->
+    <SignupModal v-if="showSignup" @close="showSignup = false" />
   </header>
 </template>
 
-<script>
-export default {
-  name: 'Header',
-}
+<script setup>
+import { ref } from 'vue'
+import LoginModal from './LoginModal.vue'
+import SignupModal from './SignupModal.vue'
+
+const isLogin = ref(false)
+const username = ref('임세현')
+
+const showLogin = ref(false)
+const showSignup = ref(false)
 </script>
 
 <style scoped></style>

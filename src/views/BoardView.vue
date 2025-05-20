@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    게시판 입니다
+  </div>
 </template>
 
 <script setup></script>

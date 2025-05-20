@@ -6,8 +6,17 @@ import Header from './components/Header.vue'
 <template>
   <div id="app">
     <Header />
-    <main><router-view /></main>
+    <main class="pt-14">
+      <router-view />
+    </main>
   </div>
 </template>
 
-<style></style>
+<style>
+#app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+

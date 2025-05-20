@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import MapView from '../views/MapView.vue'
 import DetailView from '../views/DetailView.vue'
 import BoardView from '../views/BoardView.vue'
-import MypageView from '../views/MypageView.vue'
+import MypageView from '../views/MyPageView.vue'
 import CalendarView from '../views/CalendarView.vue'
 
 const routes = [

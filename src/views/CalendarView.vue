@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    달력 입니다
+  </div>
 </template>
 
 <script setup></script>

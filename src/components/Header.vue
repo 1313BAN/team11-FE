@@ -2,7 +2,7 @@
   <header
     class="w-full h-14 bg-gray-800 text-white flex justify-between items-center px-6 fixed top-0 z-50"
   >
-  <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2">
       <button>로고</button>
       <template v-if="!isLogin">
         <button>로그인</button>
@@ -14,6 +14,7 @@
       </template>
     </div>
     <nav class="space-x-4 whitespace-nowrap">
+      <router-link to="/home">Home</router-link>
       <router-link to="/map">Map</router-link>
       <router-link to="/board">Board</router-link>
       <router-link to="/mypage">My Page</router-link>

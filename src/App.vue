@@ -1,6 +1,12 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import Header from './components/Header.vue'
+// App.vue or main Layout 컴포넌트에서
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
+userStore.initialize()
+
 </script>
 
 <template>

@@ -10,7 +10,7 @@
               id="username"
               v-model="username"
               type="text"
-              class="w-full border p-2"
+              class="bg-black w-full border p-2"
               required
             />
           </div>
@@ -20,7 +20,7 @@
               id="password"
               v-model="password"
               type="password"
-              class="w-full border p-2"
+              class="bg-black w-full border p-2"
               required
             />
           </div>
@@ -32,16 +32,37 @@
   
   <script setup>
   import { ref } from 'vue'
-  
+  import { login } from '@/api/auth'
+  import { fetchUserInfo } from '@/api/user'
+  import { useUserStore } from '@/stores/user'
+
+  const userStore = useUserStore()
+
   const emit = defineEmits(['close'])
   
   const username = ref('')
   const password = ref('')
   
-  const handleLogin = () => {
-    console.log('로그인 시도:', username.value, password.value)
-    // 실제 로그인 API 연동은 여기서 처리
-    emit('close')
+  const handleLogin = async () => {
+    try {
+      const payload = {
+        username: username.value,
+        password: password.value,
+      }
+      const response = await login(payload)
+
+      const accessToken = response.data.data.accessToken
+
+      userStore.login(accessToken)
+       
+       
+      emit('close')
+    } catch (error) {
+      alert('로그인 실패: ' + error.response?.data?.message || error.message)
+    }
+    const userInfo = await fetchUserInfo()
+    userStore.setUserInfo(userInfo.data.data.nickname)
   }
   </script>
+  
   

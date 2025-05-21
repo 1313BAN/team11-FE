@@ -9,12 +9,11 @@
         <button @click="showSignup = true">회원가입</button>
       </template>
       <template v-else>
-        <span class="text-sm">{{ username }}님 안녕하세요</span>
-        <button>로그아웃</button>
+        <span class="text-sm">{{ nickname }}님 안녕하세요</span>
+        <button @click="handleLogout">로그아웃</button>
       </template>
     </div>
     <nav class="space-x-4 whitespace-nowrap">
-      <router-link to="/home">Home</router-link>
       <router-link to="/map">Map</router-link>
       <router-link to="/board">Board</router-link>
       <router-link to="/mypage">My Page</router-link>
@@ -32,12 +31,18 @@
 import { ref } from 'vue'
 import LoginModal from './LoginModal.vue'
 import SignupModal from './SignupModal.vue'
-
-const isLogin = ref(false)
-const username = ref('임세현')
+import { useUserStore } from '@/stores/user'
+import { computed } from 'vue'
+const userStore = useUserStore()
+const isLogin = computed(() => userStore.isLogin)
+const nickname = computed(() => userStore.nickname)
 
 const showLogin = ref(false)
 const showSignup = ref(false)
+const handleLogout = () => {
+  userStore.logout()
+}
+
 </script>
 
 <style scoped></style>

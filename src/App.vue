@@ -6,7 +6,6 @@ import { useUserStore } from '@/stores/user'
 
 const userStore = useUserStore()
 userStore.initialize()
-
 </script>
 
 <template>
@@ -25,4 +24,3 @@ userStore.initialize()
   padding: 0;
 }
 </style>
-

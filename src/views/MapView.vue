@@ -1,35 +1,43 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { fetchSunInfoList } from '@/api/map'
 
-// 현재 마우스 올린 마커 정보를 저장
 const hoveredMarker = ref(null)
+const markers = ref([])
 
-// 마커 목록
-const markers = [
-  {
-    id: 1,
-    name: '서울',
-    top: '30%',
-    left: '60%',
-    sunrise: '06:00',
-    sunset: '18:30',
-  },
-  {
-    id: 2,
-    name: '제주',
-    top: '85%',
-    left: '50%',
-    sunrise: '06:10',
-    sunset: '18:45',
-  },
-]
+// 지도 위치 수기 매핑
+const positionMap = {
+  1: { top: '15%', left: '72%' },
+  2: { top: '46.1%', left: '87%' },
+  3: { top: '52%', left: '86%' },
+  4: { top: '57%', left: '85%' },
+  5: { top: '63%', left: '78%' },
+  6: { top: '92%', left: '30%' },
+  7: { top: '15%', left: '25%' },
+  8: { top: '13%', left: '40%' },
+}
+
+onMounted(async () => {
+  try {
+    const res = await fetchSunInfoList()
+    markers.value = res.data.map((spot) => ({
+      id: spot.spotId,
+      name: spot.name,
+      sunrise: spot.sunrise_time,
+      sunset: spot.sunset_time,
+      ...positionMap[spot.spotId],
+    }))
+  } catch (e) {
+    console.error('🌅 마커 불러오기 실패:', e)
+  }
+})
 </script>
 
 <template>
   <div class="w-screen h-screen flex justify-center items-center bg-black text-white">
     <div class="relative w-[850px]">
       <!-- 지도 이미지 -->
-      <img src="@/assets/korea-map.jpg" class="w-full h-auto" />
+      <img src="@/assets/korea.png" class="w-full h-auto" />
 
       <!-- 마커 + 호버 -->
       <div

@@ -10,7 +10,7 @@
               id="username"
               v-model="username"
               type="text"
-              class="w-full border p-2"
+              class="bg-black w-full border p-2"
               required
             />
           </div>
@@ -20,7 +20,7 @@
               id="password"
               v-model="password"
               type="password"
-              class="w-full border p-2"
+              class="bg-black w-full border p-2"
               required
             />
           </div>
@@ -30,7 +30,17 @@
               id="confirm"
               v-model="confirm"
               type="password"
-              class="w-full border p-2"
+              class="bg-black w-full border p-2"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nickname" class="block mb-1">닉네임</label>
+            <input
+              id="nickname"
+              v-model="nickname"
+              type="text"
+              class="bg-black w-full border p-2"
               required
             />
           </div>
@@ -41,13 +51,15 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { signup } from '@/api/user'
+import { ref } from 'vue'
   
   const emit = defineEmits(['close'])
   
   const username = ref('')
   const password = ref('')
   const confirm = ref('')
+  const nickname = ref('')
   
   const handleSignup = () => {
     if (password.value !== confirm.value) {
@@ -55,7 +67,13 @@
       return
     }
     console.log('회원가입 시도:', username.value, password.value)
-    // 실제 회원가입 API 연동은 여기서 처리
+    const payload = {
+      username: username.value,
+      password: password.value,
+      nickname: nickname.value
+    }
+
+    const response = signup(payload)
     emit('close')
   }
   </script>

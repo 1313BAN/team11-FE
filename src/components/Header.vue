@@ -1,23 +1,23 @@
 <template>
-  <header
-    class="w-full h-14 bg-gray-800 text-white flex justify-between items-center px-6 fixed top-0 z-50"
-  >
-    <div class="flex items-center gap-2">
-      <button>로고</button>
+  <header class="w-full h-14 bg-black text-green-500 flex items-center justify-between px-6 fixed top-0 z-50 shadow">
+    <!-- 왼쪽: 로고 + 페이지 이동 메뉴 -->
+    <div class="flex items-center gap-6">
+      <router-link to="/" class="font-bold text-lg">Goldentime</router-link>
+      <router-link to="/map" class="text-sm">지도</router-link>
+      <router-link to="/board" class="text-sm">게시판</router-link>
+    </div>
+
+    <!-- 오른쪽: 로그인/회원가입 또는 사용자 정보 -->
+    <div class="flex items-center gap-4">
       <template v-if="!isLogin">
-        <button @click="showLogin = true">로그인</button>
-        <button @click="showSignup = true">회원가입</button>
+        <button @click="showLogin = true" class="text-sm">로그인</button>
+        <button @click="showSignup = true" class="text-sm">회원가입</button>
       </template>
       <template v-else>
-        <span class="text-sm">{{ nickname }}님 안녕하세요</span>
-        <button @click="handleLogout">로그아웃</button>
+        <router-link to="/mypage" class="text-sm">{{ nickname }}님</router-link>
+        <button @click="handleLogout" class="text-sm">로그아웃</button>
       </template>
     </div>
-    <nav class="space-x-4 whitespace-nowrap">
-      <router-link to="/map">Map</router-link>
-      <router-link to="/board">Board</router-link>
-      <router-link to="/mypage">My Page</router-link>
-    </nav>
 
     <!-- 로그인 모달 -->
     <LoginModal v-if="showLogin" @close="showLogin = false" />
@@ -26,6 +26,7 @@
     <SignupModal v-if="showSignup" @close="showSignup = false" />
   </header>
 </template>
+
 
 <script setup>
 import { ref } from 'vue'

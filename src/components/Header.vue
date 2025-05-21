@@ -29,21 +29,26 @@
 
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import LoginModal from './LoginModal.vue'
 import SignupModal from './SignupModal.vue'
 import { useUserStore } from '@/stores/user'
-import { computed } from 'vue'
+
 const userStore = useUserStore()
+const router = useRouter()
+
 const isLogin = computed(() => userStore.isLogin)
 const nickname = computed(() => userStore.nickname)
 
 const showLogin = ref(false)
 const showSignup = ref(false)
+
 const handleLogout = () => {
   userStore.logout()
+  router.push('/') 
 }
-
 </script>
+
 
 <style scoped></style>

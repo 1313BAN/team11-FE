@@ -39,11 +39,7 @@ const routes = [
     name: 'mypage',
     component: MypageView,
   },
-  {
-    path: '/home',
-    name: 'home',
-    component: HomeView,
-  },
+
 ]
 
 const router = createRouter({

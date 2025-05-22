@@ -1,5 +1,5 @@
 <template>
-  <header class="w-full h-14 bg-black text-green-500 flex items-center justify-between px-6 fixed top-0 z-50 shadow">
+  <header class="w-full h-14 bg-black text-gree flex items-center justify-between px-6 fixed top-0 z-50 shadow">
     <!-- 왼쪽: 로고 + 페이지 이동 메뉴 -->
     <div class="flex items-center gap-6">
       <router-link to="/" class="font-bold text-lg">Goldentime</router-link>
@@ -31,12 +31,15 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
+
 import LoginModal from './LoginModal.vue'
 import SignupModal from './SignupModal.vue'
 import { useUserStore } from '@/stores/user'
 
-const userStore = useUserStore()
 const router = useRouter()
+const toast = useToast()
+const userStore = useUserStore()
 
 const isLogin = computed(() => userStore.isLogin)
 const nickname = computed(() => userStore.nickname)
@@ -45,8 +48,16 @@ const showLogin = ref(false)
 const showSignup = ref(false)
 
 const handleLogout = () => {
-  userStore.logout()
-  router.push('/') 
+  if (confirm('로그아웃 하시겠습니까?')) {
+    userStore.logout()
+    toast.add({
+      severity: 'info',
+      summary: '로그아웃',
+      detail: '성공적으로 로그아웃되었습니다.',
+      life: 2000,
+    })
+    router.push('/')
+  }
 }
 </script>
 

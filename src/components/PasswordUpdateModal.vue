@@ -1,13 +1,13 @@
 <template>
   <div class="fixed inset-0 bg-black/30 flex justify-center items-center z-50">
     <div class="bg-white p-6 rounded shadow-md w-96 relative">
-      <button @click="$emit('close')" class="absolute top-2 right-2">X</button>
-      <h2 class="text-lg font-semibold mb-4">비밀번호 변경</h2>
+      <button @click="$emit('close')" class="text-black absolute top-2 right-2">X</button>
+      <h2 class="text-black text-lg font-semibold mb-4">비밀번호 변경</h2>
 
       <input
         v-model="currentPassword"
         type="password"
-        class="border w-full p-2 mb-2"
+        class="text-black border w-full p-2 mb-2"
         placeholder="현재 비밀번호"
       />
       <input

@@ -1,34 +1,46 @@
 <template>
-  <div class="max-w-xl mx-auto mt-20 px-4">
-    <h2 class="text-2xl font-bold mb-6">마이페이지</h2>
+  <div class="max-w-2xl mx-auto mt-20 px-4">
+    <Card class="rounded shadow p-6">
+      <template #content>
+        <h2 class="text-2xl font-bold mb-6 text-center">마이페이지</h2>
 
-    <!-- 사용자 정보 -->
-    <div class="space-y-4 mb-8">
-      <div class="flex justify-between items-center">
-        <span><strong>아이디:</strong> {{ username }}</span>
-      </div>
+        <!-- 사용자 정보 -->
+        <div class="space-y-4 mb-8">
+          <div class="flex justify-between items-center">
+            <span><strong>아이디:</strong> {{ username }}</span>
+          </div>
 
-      <div class="flex justify-between items-center">
-        <span><strong>닉네임:</strong> {{ nickname }}</span>
-        <button @click="showNicknameModal = true" class="text-blue-600 hover:underline text-sm">수정</button>
-      </div>
+          <div class="flex justify-between items-center">
+            <span><strong>닉네임:</strong> {{ nickname }}</span>
+            <Button
+              @click="showNicknameModal = true"
+              label="수정"
+              text
+              class="text-blue-600 hover:underline text-sm"
+            />
+          </div>
 
-      <div class="flex justify-between items-center">
-        <span><strong>비밀번호:</strong> ••••••••</span>
-        <button @click="showPasswordModal = true" class="text-blue-600 hover:underline text-sm">수정</button>
-      </div>
-    </div>
+          <div class="flex justify-between items-center">
+            <span><strong>비밀번호:</strong> ••••••••</span>
+            <Button
+              @click="showPasswordModal = true"
+              label="수정"
+              text
+              class="text-blue-600 hover:underline text-sm"
+            />
+          </div>
+        </div>
 
-    <!-- 계정 삭제 -->
-    <div class="border-t pt-6 mt-6">
-      <h3 class="font-semibold mb-2 text-red-600">계정 삭제</h3>
-      <button
-        @click="confirmDelete"
-        class="bg-red-500 text-white px-4 py-2 rounded"
-      >
-        계정 삭제하기
-      </button>
-    </div>
+        <!-- 계정 삭제 -->
+        <div class="border-t pt-6 mt-6">
+          <Button
+            label="계정 삭제하기"
+            class="bg-red-500 text-white px-4 py-2 rounded"
+            @click="confirmDelete"
+          />
+        </div>
+      </template>
+    </Card>
 
     <!-- 닉네임 수정 모달 -->
     <NicknameModal v-if="showNicknameModal" :currentNickname="nickname" @close="showNicknameModal = false" />
@@ -40,10 +52,12 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { fetchUserInfo, deleteAccount } from '@/api/user'
 import { useUserStore } from '@/stores/user'
-import { useRouter } from 'vue-router'
 
+import Card from 'primevue/card'
+import Button from 'primevue/button'
 import NicknameModal from '@/components/NicknameUpdateModal.vue'
 import PasswordModal from '@/components/PasswordUpdateModal.vue'
 
@@ -52,7 +66,7 @@ const userStore = useUserStore()
 
 const username = ref('')
 
-const nickname = computed(() => userStore.nickname) // ✅ userStore 닉네임 반영됨
+const nickname = computed(() => userStore.nickname)
 
 const showNicknameModal = ref(false)
 const showPasswordModal = ref(false)

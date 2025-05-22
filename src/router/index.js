@@ -25,7 +25,7 @@ const routes = [
   },
   {
     path: '/calendar/:spotId',
-    name: 'calendar',
+    name: 'CalendarView',
     component: CalendarView,
     props: true,
   },
@@ -39,7 +39,6 @@ const routes = [
     name: 'mypage',
     component: MypageView,
   },
-
 ]
 
 const router = createRouter({

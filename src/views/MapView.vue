@@ -1,9 +1,21 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { fetchSunInfoList } from '@/api/map'
+import { useRouter } from 'vue-router'
 
 const hoveredMarker = ref(null)
 const markers = ref([])
+
+const router = useRouter()
+
+function goToCalendar(marker) {
+  console.log('➡️ 이동할 marker:', marker)
+  router.push({
+    name: 'CalendarView',
+    params: { spotId: marker.id },
+    query: { name: marker.name },
+  })
+}
 
 // 지도 위에서의 마커 위치 % 수기 매핑
 const positionMap = {
@@ -17,7 +29,6 @@ const positionMap = {
   8: { top: '13%', left: '40%' }, // 아차산
 }
 
-// API 호출 및 마커 구성
 onMounted(async () => {
   try {
     const res = await fetchSunInfoList()
@@ -52,7 +63,7 @@ onMounted(async () => {
         <!-- 마커 + Hover 박스를 한 덩어리로 묶음 -->
         <div class="relative flex flex-col items-start">
           <!-- 마커 점 -->
-          <div class="w-3 h-3 bg-red-500 rounded-full cursor-pointer"></div>
+          <div class="w-5 h-5 bg-red-500 rounded-full cursor-pointer"></div>
 
           <!-- Hover 정보 박스 -->
           <div
@@ -63,7 +74,9 @@ onMounted(async () => {
             <div>일출: {{ marker.sunrise }}</div>
             <div>일몰: {{ marker.sunset }}</div>
             <div class="underline mt-1 cursor-pointer">자세히 보기</div>
-            <div class="mt-1 text-blue-600 cursor-pointer">달력으로 가기</div>
+            <div class="mt-1 text-blue-600 cursor-pointer" @click="goToCalendar(marker)">
+              달력으로 가기
+            </div>
           </div>
         </div>
       </div>

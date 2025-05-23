@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MapView from '../views/MapView.vue'
-import DetailView from '../views/DetailView.vue'
+import PostView from '../views/PostView.vue'
 import BoardView from '../views/BoardView.vue'
 import MypageView from '../views/MyPageView.vue'
 import CalendarView from '../views/CalendarView.vue'
@@ -18,9 +18,9 @@ const routes = [
     component: MapView,
   },
   {
-    path: '/detail/:spotId',
+    path: '/board/:id',
     name: 'detail',
-    component: DetailView,
+    component: PostView,
     props: true,
   },
   {
@@ -39,6 +39,7 @@ const routes = [
     name: 'mypage',
     component: MypageView,
   },
+
 ]
 
 const router = createRouter({

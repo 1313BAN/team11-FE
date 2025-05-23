@@ -5,6 +5,7 @@ import DetailView from '../views/DetailView.vue'
 import BoardView from '../views/BoardView.vue'
 import MypageView from '../views/MyPageView.vue'
 import CalendarView from '../views/CalendarView.vue'
+import NearbyAttractions from '../views/NearbyAttractions.vue'
 
 const routes = [
   {
@@ -38,6 +39,11 @@ const routes = [
     path: '/mypage',
     name: 'mypage',
     component: MypageView,
+  },
+  {
+    path: '/nearby',
+    name: 'NearbyAttractions',
+    component: NearbyAttractions,
   },
 ]
 

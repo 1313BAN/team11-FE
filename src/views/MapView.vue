@@ -16,6 +16,17 @@ function goToCalendar(marker) {
     query: { name: marker.name },
   })
 }
+const goToNearby = (spot) => {
+  console.log('🔍 marker:', spot) // ✅ 여기에 추가
+  router.push({
+    name: 'NearbyAttractions',
+    query: {
+      lat: spot.latitude,
+      lon: spot.longitude,
+      name: spot.name,
+    },
+  })
+}
 
 // 지도 위에서의 마커 위치 % 수기 매핑
 const positionMap = {
@@ -37,6 +48,8 @@ onMounted(async () => {
       name: spot.name,
       sunrise: spot.sunrise_time,
       sunset: spot.sunset_time,
+      latitude: spot.lat,
+      longitude: spot.lon,
       ...positionMap[spot.spotId],
     }))
   } catch (e) {
@@ -73,7 +86,7 @@ onMounted(async () => {
             <div class="font-bold">{{ marker.name }}</div>
             <div>일출: {{ marker.sunrise }}</div>
             <div>일몰: {{ marker.sunset }}</div>
-            <div class="underline mt-1 cursor-pointer">자세히 보기</div>
+            <button @click="goToNearby(marker)">자세히 보기</button>
             <div class="mt-1 text-blue-600 cursor-pointer" @click="goToCalendar(marker)">
               달력으로 가기
             </div>

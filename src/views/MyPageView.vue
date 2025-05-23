@@ -43,7 +43,11 @@
     </Card>
 
     <!-- 닉네임 수정 모달 -->
-    <NicknameModal v-if="showNicknameModal" :currentNickname="nickname" @close="showNicknameModal = false" />
+    <NicknameModal
+      v-if="showNicknameModal"
+      :currentNickname="nickname"
+      @close="showNicknameModal = false"
+    />
 
     <!-- 비밀번호 변경 모달 -->
     <PasswordModal v-if="showPasswordModal" @close="showPasswordModal = false" />

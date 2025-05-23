@@ -50,9 +50,6 @@
             <div class="text-lg font-semibold">{{ dayjs(item.date).date() }}</div>
             <div class="text-lg" v-if="item.sunriseTime">🌅 {{ item.sunriseTime }}</div>
             <div class="text-lg" v-if="item.sunsetTime">🌇 {{ item.sunsetTime }}</div>
-            <div class="text-xl" v-if="item.weatherIconCode">
-              {{ iconMap[item.weatherIconCode] }}
-            </div>
           </div>
         </div>
       </div>
@@ -93,7 +90,6 @@ const daysInMonth = computed(() => {
       date: d.format('YYYY-MM-DD'),
       sunriseTime: found?.sunriseTime || '',
       sunsetTime: found?.sunsetTime || '',
-      weatherIconCode: found?.weatherIconCode || '',
     })
   }
   return days
@@ -111,11 +107,5 @@ function nextMonth() {
   const next = currentMonth.value.add(1, 'month')
   if (next.isAfter(maxMonth, 'month')) return
   currentMonth.value = next
-}
-
-const iconMap = {
-  SUNNY: '☀️',
-  CLOUDY: '☁️',
-  RAIN: '🌧️',
 }
 </script>

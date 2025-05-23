@@ -46,13 +46,20 @@ const temperature = ref('')
 const rainTypeText = ref('')
 const regionName = ref('') // 지역명 표시
 
+// ✅ 날씨 텍스트에 따라 이미지 매핑
 const weatherImage = computed(() => {
-  if (rainTypeText.value.includes('비')) {
+  const text = rainTypeText.value
+
+  if (text.includes('비')) {
     return new URL('@/assets/rain.png', import.meta.url).href
-  } else if (rainTypeText.value.includes('맑음')) {
+  } else if (text.includes('눈')) {
+    return new URL('@/assets/snow.png', import.meta.url).href
+  } else if (text.includes('맑음')) {
     return new URL('@/assets/good.png', import.meta.url).href
+  } else if (text.includes('흐림') || text.includes('구름')) {
+    return new URL('@/assets/cloud.png', import.meta.url).href
   } else {
-    return null
+    return new URL('@/assets/unknown.png', import.meta.url).href
   }
 })
 

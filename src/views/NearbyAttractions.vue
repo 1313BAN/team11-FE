@@ -32,8 +32,9 @@
         <img
           v-if="selectedAttraction.firstImage"
           :src="selectedAttraction.firstImage"
-          class="w-full h-64 object-cover mb-4 rounded"
+          class="w-full max-h-64 object-contain mb-4 rounded"
         />
+
         <p><strong>주소:</strong> {{ selectedAttraction.addr1 }}</p>
         <p v-if="selectedAttraction.overview" class="mt-2 whitespace-pre-line">
           <strong>소개:</strong><br />

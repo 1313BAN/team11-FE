@@ -110,7 +110,7 @@ const handleLogin = async () => {
     userStore.login(accessToken)
 
     const userInfo = await fetchUserInfo()
-    userStore.setUserInfo(userInfo.data.data.nickname)
+    userStore.setUserInfo(userInfo.data.data.nickname, userInfo.data.data.username)
 
     toast.add({
       severity: 'success',

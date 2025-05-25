@@ -17,6 +17,16 @@
         <label for="picture" class="block font-semibold mb-1">사진 업로드</label>
         <input id="picture" type="file" @change="handleFileChange" accept="image/*" />
       </div>
+      <div>
+  <label for="spot" class="block font-semibold mb-1">장소 선택</label>
+  <select v-model="selectedSpot" required>
+  <option :value="null" disabled>장소를 선택하세요</option>
+  <option v-for="spot in spots" :key="spot.id" :value="spot">
+    {{ spot.name }}
+  </option>
+</select>
+</div>
+
 
       <div class="flex justify-end">
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
@@ -24,32 +34,62 @@
         </button>
       </div>
     </form>
+    <!-- 전체 화면 로딩 오버레이 -->
+<div
+  v-if="isLoading"
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+>
+  <div class="text-white text-xl font-semibold animate-pulse">
+    등록 중입니다...
+  </div>
+</div>
+
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { createPost } from '@/api/post'
+import api from '@/api/axios' 
 
 const router = useRouter()
 const title = ref('')
 const content = ref('')
 const pictureFile = ref(null)
+const spots = ref([])
+const selectedSpot = ref(null)
+const isLoading = ref(false)
+
 
 const handleFileChange = (e) => {
   pictureFile.value = e.target.files[0]
 }
-const goToCreate = () => {
-  router.push('/board/create') // 작성 페이지 경로로 이동
-}
 
+onMounted(async () => {
+  try {
+    const res = await api.get('/spot/sun-info-list')
+    spots.value = res.data
+    console.log(spots.value)
+  } catch (err) {
+    console.error('Spot 목록 불러오기 실패', err)
+  }
+})
 
 const submitPost = async () => {
+  isLoading.value = true
   try {
     const formData = new FormData()
-    formData.append('title', title.value)
-    formData.append('content', content.value)
+    const postDto = {
+      title: title.value,
+      content: content.value,
+      weatherId: selectedSpot.value.id,
+    }
+    const jsonBlob = new Blob([JSON.stringify(postDto)], {
+      type: 'application/json',
+    })
+
+    formData.append('post', jsonBlob)
     if (pictureFile.value) {
       formData.append('picture', pictureFile.value)
     }
@@ -60,6 +100,11 @@ const submitPost = async () => {
   } catch (err) {
     console.error(err)
     alert('게시글 등록에 실패했습니다.')
+  } finally {
+    isLoading.value = false
   }
 }
+
+
+
 </script>

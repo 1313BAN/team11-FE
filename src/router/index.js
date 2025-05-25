@@ -6,6 +6,8 @@ import BoardView from '../views/BoardView.vue'
 import MypageView from '../views/MyPageView.vue'
 import CalendarView from '../views/CalendarView.vue'
 import NearbyAttractions from '../views/NearbyAttractions.vue'
+import PostCreateView from '@/views/PostCreateView.vue'
+import PostEditView from '../views/PostEditView.vue'
 
 const routes = [
   {
@@ -36,6 +38,11 @@ const routes = [
     component: BoardView,
   },
   {
+    path: '/board/create',
+    name: 'createPost',
+    component: PostCreateView,
+  },
+  {
     path: '/mypage',
     name: 'mypage',
     component: MypageView,
@@ -45,6 +52,12 @@ const routes = [
     name: 'NearbyAttractions',
     component: NearbyAttractions,
   },
+  {
+  path: '/board/edit/:id',
+  name: 'BoardEdit',
+  component: PostEditView,
+  meta: { requiresAuth: true } // 선택
+},
 
 ]
 

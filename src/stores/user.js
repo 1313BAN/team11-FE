@@ -6,6 +6,7 @@ export const useUserStore = defineStore('user', {
     isLogin: false,
     token: null,
     nickname: '', 
+    username: ''
   }),
 
   actions: {
@@ -19,6 +20,7 @@ export const useUserStore = defineStore('user', {
       this.isLogin = false
       this.token = null
       this.nickname = ''
+      this.username = ''
       localStorage.removeItem('accessToken')
     },
 
@@ -29,8 +31,9 @@ export const useUserStore = defineStore('user', {
         this.token = token
       }
     },
-    setUserInfo(nickname) {
+    setUserInfo(nickname, username) {
       this.nickname = nickname
+      this.username = username
     },
   },
   persist: true, // ✅ 자동으로 저장

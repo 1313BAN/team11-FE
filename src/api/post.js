@@ -11,4 +11,9 @@ export const removeComment = (commentId) =>
   api.delete(`/comment/${commentId}`)
 
 export const updateComment = (commentId, content) =>
-  api.put(`/comment/${commentId}`, { content })
+  api.patch(`/comment/${commentId}`, { content })
+
+export const createPost = (formData) =>
+  api.post('/post', formData)
+
+export const deletePostById = (id) => api.delete(`/post/${id}`)

@@ -59,8 +59,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="w-screen h-screen flex justify-center items-center bg-black text-white">
-    <div class="relative w-[850px]">
+  <div class="w-screen h-screen/2 flex justify-center items-center">
+    <div class="relative w-[400px]">
       <!-- 지도 이미지 -->
       <img src="@/assets/korea.png" class="w-full h-auto" />
 
@@ -68,7 +68,7 @@ onMounted(async () => {
       <div
         v-for="marker in markers"
         :key="marker.id"
-        class="absolute"
+        class=" absolute"
         :style="{ top: marker.top, left: marker.left }"
         @mouseenter="hoveredMarker = marker"
         @mouseleave="hoveredMarker = null"
@@ -76,7 +76,13 @@ onMounted(async () => {
         <!-- 마커 + Hover 박스를 한 덩어리로 묶음 -->
         <div class="relative flex flex-col items-start">
           <!-- 마커 점 -->
-          <div class="w-5 h-5 bg-red-500 rounded-full cursor-pointer"></div>
+          <!-- 이미지 마커 -->
+<img
+  src="@/assets/logo.png"
+  alt="마커"
+  class="w-6 h-6 object-contain cursor-pointer transition-transform duration-200 hover:scale-125"
+/>
+
 
           <!-- Hover 정보 박스 -->
           <div
@@ -96,3 +102,9 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.custom-header {
+  background-color:hsla(20, 80%, 55%, 1); /* 오렌지 계열 강조 */
+}
+</style>

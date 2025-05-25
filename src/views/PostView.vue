@@ -1,73 +1,118 @@
 <template>
-  <div class="p-6 max-w-3xl mx-auto">
+  <div class="p-6 max-w-3xl mx-auto text-white">
+    <!-- 제목 + 버튼 -->
     <div class="flex justify-between items-start mb-2">
-  <h2 class="text-2xl font-bold">{{ post.title }}</h2>
+      <div class="flex items-center gap-2">
+        <img
+          src="@/assets/logo.png"
+          alt="로고"
+          class="w-5 h-5 object-contain"
+        />
+        <h2 class="text-2xl font-bold text-orange-400">{{ post.title }}</h2>
+      </div>
 
-  <!-- 본인 글일 경우에만 수정/삭제 버튼 표시 -->
-  <div v-if="post.username === username" class="space-x-2 text-sm">
-    <button @click="editPost" class="text-blue-600 hover:underline">수정</button>
-    <button @click="deletePost" class="text-red-500 hover:underline">삭제</button>
-  </div>
-</div>
+      <div v-if="post.username === username" class="space-x-2 text-sm">
+        <button @click="editPost" class="text-blue-400 hover:underline">수정</button>
+        <button @click="deletePost" class="text-red-400 hover:underline">삭제</button>
+      </div>
+    </div>
 
-<p class="text-gray-600 mb-1">작성자: {{ post.nickname }}</p>
-<p class="text-sm text-gray-700 line-clamp-2">{{ post.weatherName }}</p>
+    <!-- 작성자 및 날씨 -->
+    <p class="text-sm text-gray-300 mb-1">작성자: {{ post.nickname }}</p>
+    <p class="text-sm text-gray-400 mb-4">날씨: {{ post.weatherName }}</p>
 
-<img
-  v-if="post.picture"
-  :src="`http://localhost:8080${post.picture}`"
-  alt="썸네일"
-  class="w-full max-w-xl h-auto rounded-lg shadow mb-6 object-contain"
-/>
+    <!-- 이미지 -->
+    <img
+      v-if="post.picture"
+      :src="`http://localhost:8080${post.picture}`"
+      alt="썸네일"
+      class="w-full max-w-xl h-auto rounded-lg shadow mb-6 object-contain border"
+    />
 
-    <p class="mb-6 whitespace-pre-wrap">{{ post.content }}</p>
+    <!-- 내용 -->
+    <p class="mb-6 whitespace-pre-wrap leading-relaxed text-gray-200">{{ post.content }}</p>
 
     <!-- 댓글 작성 -->
-    <div class="mb-6">
-      <h3 class="text-lg font-semibold mb-2">댓글 작성</h3>
-      <textarea v-model="newComment" class="w-full border p-2 rounded" rows="3" placeholder="댓글을 입력하세요"></textarea>
-      <button @click="submitComment" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">작성</button>
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold text-gray-100 mb-2">댓글 작성</h3>
+      <textarea
+        v-model="newComment"
+        class="w-full border p-2 rounded text-gray-900"
+        rows="3"
+        placeholder="댓글을 입력하세요"
+      ></textarea>
+      <button
+        @click="submitComment"
+        class="mt-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
+      >
+        작성
+      </button>
     </div>
 
     <!-- 댓글 리스트 -->
-    <h3 class="text-lg font-semibold mt-8 mb-3">댓글</h3>
-    <div v-if="post.comments.length === 0" class="text-gray-500">댓글이 없습니다.</div>
+    <h3 class="text-lg font-semibold text-gray-100 mb-3">댓글</h3>
+    <div v-if="post.comments.length === 0" class="text-gray-400">댓글이 없습니다.</div>
     <ul class="space-y-2">
-      <li v-for="comment in post.comments" :key="comment.id" class="border p-3 rounded">
+      <li
+        v-for="comment in post.comments"
+        :key="comment.id"
+        class=" p-3 rounded bg-[#202020]"
+      >
         <div class="flex justify-between items-center">
-          <span class="text-sm font-semibold">{{ comment.username }}</span>
-          <div v-if="comment.username === username" class="text-xs space-x-2 text-blue-500">
+          <span class="text-sm font-semibold text-orange-300">{{ comment.username }}</span>
+          <div
+            v-if="comment.username === username"
+            class="text-xs space-x-2 text-blue-400"
+          >
             <button @click="openEditModal(comment)">수정</button>
-            <button @click="deleteComment(comment.id)" class="text-red-500">삭제</button>
+            <button @click="deleteComment(comment.id)" class="text-red-400">삭제</button>
           </div>
         </div>
-        <div v-if="editingId === comment.id">
-          <textarea v-model="editContent" class="w-full mt-2 border p-2 rounded"></textarea>
-          <div class="mt-2 space-x-2">
-            <button @click="confirmEdit(comment.id)" class="bg-green-500 text-white px-2 py-1 rounded">저장</button>
-            <button @click="cancelEdit" class="bg-gray-300 px-2 py-1 rounded">취소</button>
-          </div>
-        </div>
-        <p v-else class="mt-1 text-sm">{{ comment.content }}</p>
+        <p class="mt-2 text-sm text-gray-200">{{ comment.content }}</p>
       </li>
     </ul>
+
     <!-- 댓글 수정 모달 -->
-<div
+    <div
   v-if="showEditModal"
-  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
 >
-  <div class="bg-white p-6 rounded shadow w-full max-w-md">
-    <h3 class="text-lg font-bold mb-2">댓글 수정</h3>
-    <textarea v-model="editContent" rows="4" class="w-full border p-2 rounded"></textarea>
-    <div class="mt-4 flex justify-end space-x-2">
-      <button @click="showEditModal = false" class="bg-gray-300 px-3 py-1 rounded">취소</button>
-      <button @click="confirmEdit" class="bg-blue-500 text-white px-3 py-1 rounded">저장</button>
+  <div
+    class="w-full max-w-md rounded-xl p-6 relative"
+    :style="{ backgroundColor: 'hsla(0, 0%, 17%, 0.95)', color: '#f5f5f5' }"
+  >
+    <!-- 헤더 -->
+    <h3 class="text-lg font-semibold text-gray-200 mb-4">✏️ 댓글 수정</h3>
+
+    <!-- 입력 필드 -->
+    <textarea
+      v-model="editContent"
+      rows="4"
+      class="w-full p-2 rounded border text-gray-800"
+      placeholder="댓글을 수정하세요"
+    ></textarea>
+
+    <!-- 버튼 -->
+    <div class="mt-4 flex justify-end gap-2">
+      <button
+        @click="showEditModal = false"
+        class="px-4 py-2 rounded bg-gray-400 hover:bg-gray-500 text-white"
+      >
+        취소
+      </button>
+      <button
+        @click="confirmEdit"
+        class="px-4 py-2 rounded bg-orange-500 hover:bg-orange-600 text-white"
+      >
+        저장
+      </button>
     </div>
   </div>
 </div>
 
   </div>
 </template>
+
 
 <script setup>
 import { ref,computed, onMounted } from 'vue'
@@ -169,5 +214,13 @@ const cancelEdit = () => {
 <style scoped>
 textarea {
   resize: vertical;
+}
+
+.custom {
+  background-color: hsla(0, 0%, 2%, 0.536);
+}
+
+.custom-edit {
+  background-color: hsla(0, 0%, 2%,100);
 }
 </style>

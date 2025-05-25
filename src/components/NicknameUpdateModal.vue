@@ -1,19 +1,31 @@
 <template>
   <div class="fixed inset-0 bg-black/30 flex justify-center items-center z-50">
-    <div class="bg-white p-6 rounded shadow-md w-96 relative">
-      <button @click="$emit('close')" class="text-black absolute top-2 right-2">X</button>
-      <h2 class="text-black text-lg font-semibold mb-4">닉네임 수정</h2>
+    <div
+      class="w-[400px] rounded-xl p-6 relative"
+      :style="{ backgroundColor: 'hsla(0, 0%, 17%, 0.95)', color: '#f5f5f5' }"
+    >
+      <button
+        @click="$emit('close')"
+        class="absolute top-3 right-3 text-gray-400 hover:text-white text-xl font-bold"
+        aria-label="닫기"
+      >
+        ×
+      </button>
+
+      <h2 class="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">
+        ✏️ 닉네임 수정
+      </h2>
 
       <input
         v-model="newNickname"
         type="text"
-        class="text-black border w-full p-2 mb-4"
         placeholder="새 닉네임을 입력하세요"
+        class="w-full p-1 rounded border text-gray-800 mb-4"
       />
 
       <button
         @click="handleUpdate"
-        class="w-full bg-blue-500 text-white py-2 rounded"
+        class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded"
       >
         저장
       </button>
@@ -26,13 +38,11 @@ import { ref } from 'vue'
 import { updateNickname } from '@/api/user'
 import { useUserStore } from '@/stores/user'
 
-const props = defineProps({
-  currentNickname: String,
-})
+const props = defineProps({ currentNickname: String })
 const emit = defineEmits(['close'])
+const userStore = useUserStore()
 
 const newNickname = ref(props.currentNickname)
-const userStore = useUserStore()
 
 const handleUpdate = async () => {
   if (newNickname.value === props.currentNickname) {

@@ -1,8 +1,18 @@
   <template>
-    <header class="w-full h-14 bg-black text-gree flex items-center justify-between px-6 fixed top-0 z-50 shadow">
+  <header class="custom-header flex items-center justify-between px-6 fixed top-0 z-50 shadow h-14 w-full">
       <!-- 왼쪽: 로고 + 페이지 이동 메뉴 -->
       <div class="flex items-center gap-6">
-        <router-link to="/" class="font-bold text-lg">Goldentime</router-link>
+        
+        <router-link to="/" class="font-bold flex text-lg">
+          <!-- 이미지 마커 -->
+
+Goldentime
+<img
+  src="@/assets/logo.png"
+  alt="마커"
+  class="w-6 h-6 object-contain cursor-pointer"
+/>
+</router-link>
         <router-link to="/map" class="text-sm">지도</router-link>
         <button @click="goToBoard" class="text-sm">게시판</button>
       </div>
@@ -71,4 +81,8 @@
   </script>
 
 
-  <style scoped></style>
+<style scoped>
+.custom-header {
+  background-color: hsla(0, 0%, 2%, 0.536);
+}
+</style>

@@ -1,58 +1,66 @@
 <template>
-  <div class="max-w-2xl mx-auto mt-20 px-4">
-    <Card class="rounded shadow p-6">
-      <template #content>
-        <h2 class="text-2xl font-bold mb-6 text-center">마이페이지</h2>
+  <div class="flex justify-center items-start pt-20 min-h-screen bg-[hsla(0,0%,17%,0.95)] text-[#f5f5f5]">
+    <div class="w-full max-w-md bg-[#202020] rounded-xl shadow-md p-6">
+      <h2 class="custom-text text-2xl font-bold text-center mb-8 ">마이페이지</h2>
 
-        <!-- 사용자 정보 -->
-        <div class="space-y-4 mb-8">
-          <div class="flex justify-between items-center">
-            <span><strong>아이디:</strong> {{ username }}</span>
-          </div>
+      <!-- 사용자 정보 -->
+      <div class="space-y-6">
+        <!-- 아이디 -->
+        <div>
+          <label class="block text-lg text-gray-400 mb-1">아이디</label>
+          <p class="text-sm font-bold text-white">{{ username }}</p>
+        </div>
 
+        <!-- 닉네임 -->
+        <div>
+          <label class="block text-lg text-gray-400 mb-1">닉네임</label>
           <div class="flex justify-between items-center">
-            <span><strong>닉네임:</strong> {{ nickname }}</span>
+            <p class="text-sm font-bold text-white">{{ nickname }}</p>
             <Button
               @click="showNicknameModal = true"
               label="수정"
               text
-              class="text-blue-600 hover:underline text-sm"
+              class="text-orange-400 hover:underline text-sm"
             />
           </div>
+        </div>
 
+        <!-- 비밀번호 -->
+        <div>
+          <label class="block text-lg text-gray-400 mb-1">비밀번호</label>
           <div class="flex justify-between items-center">
-            <span><strong>비밀번호:</strong> ••••••••</span>
+            <p class="text-sm font-bold text-white">••••••••</p>
             <Button
               @click="showPasswordModal = true"
               label="수정"
               text
-              class="text-blue-600 hover:underline text-sm"
+              class="text-orange-400 hover:underline text-sm"
             />
           </div>
         </div>
+      </div>
 
-        <!-- 계정 삭제 -->
-        <div class="border-t pt-6 mt-6">
-          <Button
-            label="계정 삭제하기"
-            class="bg-red-500 text-white px-4 py-2 rounded"
-            @click="confirmDelete"
-          />
-        </div>
-      </template>
-    </Card>
+      <!-- 계정 삭제 -->
+      <div class="mt-10 border-t border-gray-700 pt-6 text-center">
+        <Button
+  label="계정 삭제하기"
+  class="w-full text-white rounded hover:opacity-85 transition"
+  :style="{ backgroundColor: 'hsla(20, 80%, 55%, 1)' }"
+  @click="confirmDelete"
+/>
+      </div>
+    </div>
 
-    <!-- 닉네임 수정 모달 -->
+    <!-- 모달들 -->
     <NicknameModal
       v-if="showNicknameModal"
       :currentNickname="nickname"
       @close="showNicknameModal = false"
     />
-
-    <!-- 비밀번호 변경 모달 -->
     <PasswordModal v-if="showPasswordModal" @close="showPasswordModal = false" />
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
@@ -60,7 +68,6 @@ import { useRouter } from 'vue-router'
 import { fetchUserInfo, deleteAccount } from '@/api/user'
 import { useUserStore } from '@/stores/user'
 
-import Card from 'primevue/card'
 import Button from 'primevue/button'
 import NicknameModal from '@/components/NicknameUpdateModal.vue'
 import PasswordModal from '@/components/PasswordUpdateModal.vue'
@@ -69,9 +76,7 @@ const router = useRouter()
 const userStore = useUserStore()
 
 const username = ref('')
-
 const nickname = computed(() => userStore.nickname)
-
 const showNicknameModal = ref(false)
 const showPasswordModal = ref(false)
 
@@ -97,3 +102,8 @@ const confirmDelete = async () => {
   }
 }
 </script>
+<style scoped>
+.custom-text {
+  color: hsla(20, 80%, 55%, 1);
+}
+</style>

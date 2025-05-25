@@ -1,31 +1,59 @@
 <template>
-  <div class="p-6 max-w-2xl mx-auto">
-    <h2 class="text-2xl font-bold mb-6">게시글 수정</h2>
+  <div class="p-6 max-w-2xl mx-auto text-white">
+    <h2 class="text-2xl font-bold mb-6 text-orange-400">✏️ 게시글 수정</h2>
 
     <form @submit.prevent="submitEdit" class="space-y-4">
+      <!-- 제목 -->
       <div>
-        <label class="block font-semibold mb-1">제목</label>
-        <input v-model="title" type="text" class="w-full border p-2 rounded" required />
+        <label class="block text-sm font-semibold mb-1 text-gray-300">제목</label>
+        <input
+          v-model="title"
+          type="text"
+          class="w-full p-2 rounded border text-gray-800"
+          required
+        />
       </div>
 
+      <!-- 내용 -->
       <div>
-        <label class="block font-semibold mb-1">내용</label>
-        <textarea v-model="content" rows="6" class="w-full border p-2 rounded" required></textarea>
+        <label class="block text-sm font-semibold mb-1 text-gray-300">내용</label>
+        <textarea
+          v-model="content"
+          rows="6"
+          class="w-full p-2 rounded border text-gray-800"
+          required
+        ></textarea>
       </div>
 
-      <div>
-        <label class="block font-semibold mb-1">기존 이미지</label>
-        <img v-if="pictureUrl" :src="pictureUrl" alt="기존 이미지" class="w-32 h-32 object-cover rounded" />
+      <!-- 기존 이미지 -->
+      <div v-if="pictureUrl">
+        <label class="block text-sm font-semibold mb-1 text-gray-300">기존 이미지</label>
+        <img
+          :src="pictureUrl"
+          alt="기존 이미지"
+          class="w-32 h-32 object-cover rounded border"
+        />
       </div>
 
+      <!-- 사진 수정 -->
       <div>
-        <label class="block font-semibold mb-1">사진 수정 (선택)</label>
-        <input type="file" @change="handleFileChange" accept="image/*" />
+        <label class="block text-sm font-semibold mb-1 text-gray-300">사진 수정 (선택)</label>
+        <input
+          type="file"
+          @change="handleFileChange"
+          accept="image/*"
+          class="text-sm"
+        />
       </div>
 
+      <!-- 장소 선택 -->
       <div>
-        <label class="block font-semibold mb-1">장소 선택</label>
-        <select v-model="selectedSpot" required>
+        <label class="block text-sm font-semibold mb-1 text-gray-300">장소 선택</label>
+        <select
+          v-model="selectedSpot"
+          class="w-full p-2 rounded border text-gray-800"
+          required
+        >
           <option :value="null" disabled>장소를 선택하세요</option>
           <option v-for="spot in spots" :key="spot.id" :value="spot">
             {{ spot.name }}
@@ -33,15 +61,22 @@
         </select>
       </div>
 
+      <!-- 수정 버튼 -->
       <div class="flex justify-end">
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <button
+          type="submit"
+          class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
+        >
           수정 완료
         </button>
       </div>
     </form>
 
     <!-- 로딩 오버레이 -->
-    <div v-if="isLoading" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+    <div
+      v-if="isLoading"
+      class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+    >
       <div class="text-white text-xl font-semibold animate-pulse">
         수정 중입니다...
       </div>
@@ -72,14 +107,12 @@ const handleFileChange = (e) => {
 
 onMounted(async () => {
   try {
-    // spot 목록 불러오기
     const spotRes = await api.get('/spot/sun-info-list')
     spots.value = spotRes.data
 
-    // 게시글 불러오기
     const postRes = await api.get(`/post/${id}`)
     const post = postRes.data.data
-    console.log(post)
+
     title.value = post.title
     content.value = post.content
     pictureUrl.value = post.picture ? `http://localhost:8080${post.picture}` : ''
@@ -100,9 +133,12 @@ const submitEdit = async () => {
     }
 
     const formData = new FormData()
-    formData.append('post', new Blob([JSON.stringify(postDto)], {
-      type: 'application/json'
-    }))
+    formData.append(
+      'post',
+      new Blob([JSON.stringify(postDto)], {
+        type: 'application/json'
+      })
+    )
     if (pictureFile.value) {
       formData.append('picture', pictureFile.value)
     }

@@ -4,64 +4,87 @@
     :visible="true"
     :closable="false"
     :dismissableMask="true"
-    :style="{ width: '400px', position: 'relative' }"
-    header="회원가입"
+    :style="{
+      width: '400px',
+      position: 'relative',
+      borderRadius: '12px',
+      backgroundColor: 'hsla(0, 0%, 17%, 0.95)',
+      color: '#f5f5f5'
+    }"
+    class="rounded-xl"
   >
-    <!-- 닫기 버튼 -->
+    <!-- 👤 헤더 로고 + 텍스트 -->
+    <template #header>
+      <div class="flex items-center gap-3">
+        <img src="@/assets/logo.png" alt="로고" class="h-6 w-6" />
+        <span class="text-lg font-semibold text-gray-200">회원가입</span>
+      </div>
+    </template>
+
+    <!-- ❌ 닫기 버튼 -->
     <button
       @click="$emit('close')"
-      class="absolute top-3 right-3 text-gray-400 hover:text-black text-xl font-bold"
+      class="absolute top-3 right-3 text-gray-400 hover:text-white text-xl font-bold"
       aria-label="닫기"
     >
       ×
     </button>
 
-    <form @submit.prevent="handleSignup" class="flex flex-col gap-4 mt-4">
+    <form @submit.prevent="handleSignup" class="flex flex-col gap-3 mt-4">
       <!-- 아이디 -->
       <div>
-        <label for="username" class="block text-sm mb-1 text-gray-700 dark:text-gray-200">아이디</label>
-        <InputText id="username" v-model="username" class="w-full" />
-        <p v-if="username && !isUsernameValid" class="text-red-500 text-xs mt-1">
-          8~20자 영문 소문자 및 숫자 조합이어야 합니다.
+        <label for="username" class="block text-xs font-bold mb-1 text-gray-300">아이디</label>
+        <InputText
+          id="username"
+          v-model="username"
+          class="w-full p-1 border rounded text-gray-800 font-bold"
+        />
+        <p class="text-red-500 text-xs mt-1 min-h-[1rem]">
+          <span v-if="username && !isUsernameValid">8~20자의 소문자/숫자 조합이어야 합니다.</span>
         </p>
       </div>
 
       <!-- 비밀번호 -->
       <div>
-        <label for="password" class="block text-sm mb-1 text-gray-700 dark:text-gray-200">비밀번호</label>
+        <label for="password" class="block text-xs font-bold mb-1 text-gray-300">비밀번호</label>
         <Password
           id="password"
           v-model="password"
           toggleMask
           class="w-full"
-          inputClass="w-full"
+          inputClass="w-full p-1 border rounded text-gray-800"
           :feedback="false"
         />
-        <p v-if="password && !isPasswordValid" class="text-red-500 text-xs mt-1">
-          영문자와 숫자를 포함한 8~20자여야 합니다.
+        <p class="text-red-500 text-xs mt-1 min-h-[1rem]">
+          <span v-if="password && !isPasswordValid">영문자와 숫자를 포함한 8~20자여야 합니다.</span>
         </p>
       </div>
 
       <!-- 비밀번호 확인 -->
       <div>
-        <label for="confirm" class="block text-sm mb-1 text-gray-700 dark:text-gray-200">비밀번호 확인</label>
+        <label for="confirm" class="block text-xs font-bold mb-1 text-gray-300">비밀번호 확인</label>
         <Password
           id="confirm"
           v-model="confirm"
           toggleMask
           class="w-full"
-          inputClass="w-full"
+          inputClass="w-full p-1 border rounded text-gray-800"
           :feedback="false"
         />
-        <p v-if="confirm && password !== confirm" class="text-red-500 text-xs mt-1">
-          비밀번호가 일치하지 않습니다.
+        <p class="text-red-500 text-xs mt-1 min-h-[1rem]">
+          <span v-if="confirm && !isPasswordMatch">비밀번호가 일치하지 않습니다.</span>
         </p>
       </div>
 
       <!-- 닉네임 -->
       <div>
-        <label for="nickname" class="block text-sm mb-1 text-gray-700 dark:text-gray-200">닉네임</label>
-        <InputText id="nickname" v-model="nickname" class="w-full" />
+        <label for="nickname" class="block text-xs font-bold mb-1 text-gray-300">닉네임</label>
+        <InputText
+          id="nickname"
+          v-model="nickname"
+          class="w-full p-1 border rounded text-gray-800 font-bold"
+        />
+        <p class="text-transparent text-xs mt-1 min-h-[1rem]">_</p>
       </div>
 
       <!-- 에러 메시지 -->
@@ -73,7 +96,7 @@
       <Button
         :label="isLoading ? '회원가입 중...' : '회원가입'"
         :disabled="!isFormValid || isLoading"
-        class="w-full"
+        class="w-full bg-orange-500 border-orange-600 hover:bg-orange-600 text-white mt-2"
         type="submit"
       />
     </form>

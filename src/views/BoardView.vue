@@ -1,20 +1,20 @@
 <template>
-  <div class=" min-h-screen p-6 max-w-5xl mx-auto">
+  <div class="min-h-screen p-6 max-w-5xl mx-auto">
     <!-- 상단 헤더 -->
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-2xl font-bold text-white">📌 게시판</h2>
-      <button @click="goToCreate"
-              class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded shadow">
+      <button
+        @click="goToCreate"
+        class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded shadow"
+      >
         글 작성
       </button>
     </div>
 
     <!-- Spot 필터 -->
-    <select v-model="selectedSpotId" class="bg-[#202020] text-white  p-2 rounded mb-4 w-full">
+    <select v-model="selectedSpotId" class="bg-[#202020] text-white p-2 rounded mb-4 w-full">
       <option value="">전체 보기</option>
-      <option v-for="spot in spots" :key="spot.id" :value="spot.id">
-        🌅 {{ spot.name }}
-      </option>
+      <option v-for="spot in spots" :key="spot.id" :value="spot.id">🌅 {{ spot.name }}</option>
     </select>
 
     <!-- 요약 및 평점 -->
@@ -25,23 +25,18 @@
 
     <!-- 게시글 리스트 -->
     <ul v-if="posts.length > 0" class="grid gap-4">
-      <li v-for="post in posts"
-          :key="post.id"
-          class="flex bg-[#202020] rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer"
-          @click="goToDetail(post.id)">
-
+      <li
+        v-for="post in posts"
+        :key="post.id"
+        class="flex bg-[#202020] rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer"
+        @click="goToDetail(post.id)"
+      >
         <!-- 내용 -->
         <div class="p-4 flex-1 text-white">
           <div class="flex items-center gap-2 mb-1">
-            <img
-    src="@/assets/logo.png"
-    alt="마커"
-    class="w-5 h-5 object-contain cursor-pointer"
-  />
-  <h3 class="text-lg text-orange-500 font-semibold truncate">{{ post.title }}</h3>
-  
-</div>
-
+            <img src="@/assets/logo.png" alt="마커" class="w-5 h-5 object-contain cursor-pointer" />
+            <h3 class="text-lg text-orange-500 font-semibold truncate">{{ post.title }}</h3>
+          </div>
 
           <p class="text-sm text-gray-300 mb-1">작성자: {{ post.nickname }}</p>
           <p class="text-sm text-gray-400 line-clamp-2">{{ post.content }}</p>
@@ -49,15 +44,21 @@
 
           <!-- 본인 글만 수정/삭제 -->
           <div v-if="post.username === username" class="mt-2 space-x-3">
-            <button @click.stop="editPost(post.id)" class="text-blue-400 hover:underline">수정</button>
-            <button @click.stop="deletePost(post.id)" class="text-red-400 hover:underline">삭제</button>
+            <button @click.stop="editPost(post.id)" class="text-blue-400 hover:underline">
+              수정
+            </button>
+            <button @click.stop="deletePost(post.id)" class="text-red-400 hover:underline">
+              삭제
+            </button>
           </div>
         </div>
         <!-- 썸네일 -->
-        <img v-if="post.picture"
-             :src="`http://localhost:8080${post.picture}`"
-             alt="썸네일"
-             class="w-32 h-32 object-cover" />
+        <img
+          v-if="post.picture"
+          :src="`http://localhost:8080${post.picture}`"
+          alt="썸네일"
+          class="w-32 h-32 object-cover"
+        />
       </li>
     </ul>
 
@@ -96,7 +97,7 @@ const deletePost = async (id) => {
   if (confirm('정말 삭제하시겠습니까?')) {
     try {
       await deletePostById(id)
-      posts.value = posts.value.filter(p => p.id !== id)
+      posts.value = posts.value.filter((p) => p.id !== id)
       alert('삭제 완료')
     } catch (err) {
       console.error(err)

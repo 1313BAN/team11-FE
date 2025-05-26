@@ -50,6 +50,7 @@ onMounted(async () => {
       sunset: spot.sunsetTime,
       latitude: spot.lat,
       longitude: spot.lon,
+      recommendation: spot.recommendationLevel,
       ...positionMap[spot.spotId],
     }))
   } catch (e) {
@@ -73,10 +74,9 @@ onMounted(async () => {
         @mouseenter="hoveredMarker = marker"
         @mouseleave="hoveredMarker = null"
       >
-        <!-- 마커 + Hover 박스를 한 덩어리로 묶음 -->
+        <!-- 마커와 Hover 박스를 묶은 컨테이너 -->
         <div class="relative flex flex-col items-start">
-          <!-- 마커 점 -->
-          <!-- 이미지 마커 -->
+          <!-- 마커 이미지 -->
           <img
             src="@/assets/logo.png"
             alt="마커"
@@ -86,13 +86,40 @@ onMounted(async () => {
           <!-- Hover 정보 박스 -->
           <div
             v-if="hoveredMarker?.id === marker.id"
-            class="mt-1 bg-gray-200 text-black p-2 text-sm w-40 shadow-md z-50"
+            class="mt-2 bg-gray-100 text-black p-3 w-52 shadow-lg z-50 rounded-lg"
           >
-            <div class="font-bold">{{ marker.name }}</div>
-            <div>일출: {{ marker.sunrise }}</div>
-            <div>일몰: {{ marker.sunset }}</div>
-            <button @click="goToNearby(marker)">자세히 보기</button>
-            <div class="mt-1 text-blue-600 cursor-pointer" @click="goToCalendar(marker)">
+            <!-- 장소명 -->
+            <div class="font-bold text-lg mb-2">{{ marker.name }}</div>
+
+            <!-- 추천도 강조 -->
+            <div class="text-base font-semibold mb-3">
+              🌅 관람:
+              <span
+                :class="{
+                  'text-green-600 font-bold': marker.recommendation === '추천',
+                  'text-yellow-600 font-bold': marker.recommendation === '보통',
+                  'text-red-600 font-bold': marker.recommendation === '비추천',
+                  'text-pink-700 font-bold': marker.recommendation === '위험',
+                }"
+              >
+                {{ marker.recommendation }}
+              </span>
+            </div>
+
+            <!-- 일출 일몰 정보 -->
+            <div class="text-sm text-gray-800 mb-3">
+              ☀ 일출: {{ marker.sunrise }}<br />
+              🌇 일몰: {{ marker.sunset }}
+            </div>
+
+            <!-- 버튼 -->
+            <button class="text-blue-500 text-sm underline mb-1" @click="goToNearby(marker)">
+              자세히 보기
+            </button>
+            <div
+              class="text-blue-700 cursor-pointer text-sm underline"
+              @click="goToCalendar(marker)"
+            >
               달력으로 가기
             </div>
           </div>

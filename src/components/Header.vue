@@ -1,9 +1,9 @@
   <template>
-  <header class="custom-header flex items-center justify-between px-6 fixed top-0 z-50 shadow h-14 w-full">
+  <header class="custom-header flex items-center justify-between px-6 fixed top-0 z-50 shadow h-20 w-full">
       <!-- 왼쪽: 로고 + 페이지 이동 메뉴 -->
       <div class="flex items-center gap-6">
         
-        <router-link to="/" class="font-bold flex text-lg">
+        <router-link to="/" class="font-bold flex text-5xl">
           <!-- 이미지 마커 -->
 
 Goldentime
@@ -13,19 +13,19 @@ Goldentime
   class="w-6 h-6 object-contain cursor-pointer"
 />
 </router-link>
-        <router-link to="/map" class="text-sm">지도</router-link>
-        <button @click="goToBoard" class="text-sm">게시판</button>
+        <router-link to="/map" class="font-bold text-4xl">지도</router-link>
+        <button @click="goToBoard" class="font-bold text-4xl">게시판</button>
       </div>
 
       <!-- 오른쪽: 로그인/회원가입 또는 사용자 정보 -->
       <div class="flex items-center gap-4">
         <template v-if="!isLogin">
-          <button @click="showLogin = true" class="text-sm">로그인</button>
-          <button @click="showSignup = true" class="text-sm">회원가입</button>
+          <button @click="showLogin = true" class="font-bold text-3xl">로그인</button>
+          <button @click="showSignup = true" class="font-bold text-3xl">회원가입</button>
         </template>
         <template v-else>
-          <router-link to="/mypage" class="text-sm">{{ nickname }}님</router-link>
-          <button @click="handleLogout" class="text-sm">로그아웃</button>
+          <router-link to="/mypage" class="font-bold text-4xl">{{ nickname }}님</router-link>
+          <button @click="handleLogout" class="font-bold text-3xl">로그아웃</button>
         </template>
       </div>
 

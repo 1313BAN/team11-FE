@@ -59,10 +59,10 @@ const isLoading = ref(true) // ✅ 로딩 상태 추가
 
 const weatherImage = computed(() => {
   const text = rainTypeText.value
-  if (text.includes('비')) return new URL('@/assets/rain.png', import.meta.url).href
-  if (text.includes('눈')) return new URL('@/assets/snow.png', import.meta.url).href
-  if (text.includes('맑음')) return new URL('@/assets/logo.png', import.meta.url).href
-  if (text.includes('흐림') || text.includes('구름')) return new URL('@/assets/cloud.png', import.meta.url).href
+  if (text.includes('비')) return new URL('@/assets/weather/rainy.png', import.meta.url).href
+  if (text.includes('눈')) return new URL('@/assets/weather/snow.png', import.meta.url).href
+  if (text.includes('맑음')) return new URL('@/assets/weather/sunny.png', import.meta.url).href
+  if (text.includes('흐림')) return new URL('@/assets/weather/cloudy.png', import.meta.url).href
   return new URL('@/assets/unknown.png', import.meta.url).href
 })
 

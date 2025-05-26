@@ -1,6 +1,14 @@
 <template>
   <!-- 전체 화면 정중앙 배치 -->
-  <div class="w-screen h-screen flex justify-center items-center bg-black text-white">
+  <div class="w-screen h-screen flex justify-center items-center bg-black text-white relative">
+    <!-- 로딩 오버레이 -->
+    <div
+      v-if="isLoading"
+      class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    >
+      <p class="text-white text-xl animate-pulse">잠시만 기다려주세요...</p>
+    </div>
+
     <!-- 콘텐츠 최대 너비 제한 -->
     <div class="max-w-[1400px] w-full px-4">
       <!-- 제목과 콘텐츠 타입 필터 -->
@@ -10,7 +18,6 @@
           v-model="selectedType"
           class="p-2 border rounded bg-white text-black border-gray-300"
         >
-          <!-- ✅ 숫자 ID 대신 '한글 이름'으로 value 지정 -->
           <option value="">전체 보기</option>
           <option value="관광지">관광지</option>
           <option value="문화시설">문화시설</option>
@@ -63,13 +70,14 @@ const lon = parseFloat(route.query.lon)
 const spotName = route.query.name
 
 const attractions = ref([])
-const selectedType = ref('') // 콘텐츠 타입 선택
+const selectedType = ref('')
 const selectedAttraction = ref(null)
 const markerList = ref([])
 const selectedMarker = ref(null)
+const isLoading = ref(true)
+
 let map
 
-// 중심 마커 (노란 별)
 const drawCenterMarker = () => {
   const centerImage = new kakao.maps.MarkerImage(
     'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
@@ -84,9 +92,7 @@ const drawCenterMarker = () => {
   })
 }
 
-// 마커 렌더링 함수
 const renderMarkers = () => {
-  // 기존 마커 제거
   markerList.value.forEach(({ marker }) => marker.setMap(null))
   markerList.value = []
   selectedAttraction.value = null
@@ -122,6 +128,8 @@ const renderMarkers = () => {
 }
 
 onMounted(async () => {
+  isLoading.value = true
+
   const res = await fetchNearbyAttractions(lat, lon, 3, selectedType.value)
   attractions.value = res.data
   await nextTick()
@@ -147,15 +155,16 @@ onMounted(async () => {
 
     drawCenterMarker()
     renderMarkers()
+    isLoading.value = false
   })
 })
 
-// 콘텐츠 타입 변경 시 마커 다시 렌더링
 watch(selectedType, async () => {
   if (!map) return
-
+  isLoading.value = true
   const res = await fetchNearbyAttractions(lat, lon, 3, selectedType.value)
   attractions.value = res.data
   renderMarkers()
+  isLoading.value = false
 })
 </script>

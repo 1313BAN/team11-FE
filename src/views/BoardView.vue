@@ -14,7 +14,7 @@
     <!-- Spot 필터 -->
     <select v-model="selectedSpotId" class="bg-[#202020] text-white p-2 rounded mb-4 w-full">
       <option value="">전체 보기</option>
-      <option v-for="spot in spots" :key="spot.id" :value="spot.id">🌅 {{ spot.name }}</option>
+      <option v-for="spot in spots" :key="spot.spotId" :value="spot.spotId">🌅 {{ spot.name }}</option>
     </select>
 
     <!-- 요약 및 평점 -->
@@ -57,7 +57,7 @@
           v-if="post.picture"
           :src="`http://localhost:8080${post.picture}`"
           alt="썸네일"
-          class="w-32 h-32 object-cover"
+          class="w-32 h-32 object-cover rounded-lg"
         />
       </li>
     </ul>

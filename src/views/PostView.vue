@@ -19,7 +19,7 @@
 
     <!-- 작성자 및 날씨 -->
     <p class="text-sm text-gray-300 mb-1">작성자: {{ post.nickname }}</p>
-    <p class="text-sm text-gray-400 mb-4">날씨: {{ post.weatherName }}</p>
+    <p class="text-sm text-gray-400 mb-4">장소: {{ post.weatherName }}</p>
 
     <!-- 이미지 -->
     <img

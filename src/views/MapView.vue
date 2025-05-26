@@ -46,8 +46,8 @@ onMounted(async () => {
     markers.value = res.data.map((spot) => ({
       id: spot.spotId,
       name: spot.name,
-      sunrise: spot.sunrise_time,
-      sunset: spot.sunset_time,
+      sunrise: spot.sunriseTime,
+      sunset: spot.sunsetTime,
       latitude: spot.lat,
       longitude: spot.lon,
       ...positionMap[spot.spotId],
@@ -68,7 +68,7 @@ onMounted(async () => {
       <div
         v-for="marker in markers"
         :key="marker.id"
-        class=" absolute"
+        class="absolute"
         :style="{ top: marker.top, left: marker.left }"
         @mouseenter="hoveredMarker = marker"
         @mouseleave="hoveredMarker = null"
@@ -77,12 +77,11 @@ onMounted(async () => {
         <div class="relative flex flex-col items-start">
           <!-- 마커 점 -->
           <!-- 이미지 마커 -->
-<img
-  src="@/assets/logo.png"
-  alt="마커"
-  class="w-6 h-6 object-contain cursor-pointer transition-transform duration-200 hover:scale-125"
-/>
-
+          <img
+            src="@/assets/logo.png"
+            alt="마커"
+            class="w-6 h-6 object-contain cursor-pointer transition-transform duration-200 hover:scale-125"
+          />
 
           <!-- Hover 정보 박스 -->
           <div
@@ -105,6 +104,6 @@ onMounted(async () => {
 
 <style scoped>
 .custom-header {
-  background-color:hsla(20, 80%, 55%, 1); /* 오렌지 계열 강조 */
+  background-color: hsla(20, 80%, 55%, 1); /* 오렌지 계열 강조 */
 }
 </style>

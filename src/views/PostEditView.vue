@@ -28,32 +28,19 @@
       <!-- 기존 이미지 -->
       <div v-if="pictureUrl">
         <label class="block text-sm font-semibold mb-1 text-gray-300">기존 이미지</label>
-        <img
-          :src="pictureUrl"
-          alt="기존 이미지"
-          class="w-32 h-32 object-cover rounded border"
-        />
+        <img :src="pictureUrl" alt="기존 이미지" class="w-32 h-32 object-cover rounded border" />
       </div>
 
       <!-- 사진 수정 -->
       <div>
         <label class="block text-sm font-semibold mb-1 text-gray-300">사진 수정 (선택)</label>
-        <input
-          type="file"
-          @change="handleFileChange"
-          accept="image/*"
-          class="text-sm"
-        />
+        <input type="file" @change="handleFileChange" accept="image/*" class="text-sm" />
       </div>
 
       <!-- 장소 선택 -->
       <div>
         <label class="block text-sm font-semibold mb-1 text-gray-300">장소 선택</label>
-        <select
-          v-model="selectedSpot"
-          class="w-full p-2 rounded border text-gray-800"
-          required
-        >
+        <select v-model="selectedSpot" class="w-full p-2 rounded border text-gray-800" required>
           <option :value="null" disabled>장소를 선택하세요</option>
           <option v-for="spot in spots" :key="spot.id" :value="spot">
             {{ spot.name }}
@@ -73,13 +60,8 @@
     </form>
 
     <!-- 로딩 오버레이 -->
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
-    >
-      <div class="text-white text-xl font-semibold animate-pulse">
-        수정 중입니다...
-      </div>
+    <div v-if="isLoading" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div class="text-white text-xl font-semibold animate-pulse">수정 중입니다...</div>
     </div>
   </div>
 </template>
@@ -116,7 +98,7 @@ onMounted(async () => {
     title.value = post.title
     content.value = post.content
     pictureUrl.value = post.picture ? `http://localhost:8080${post.picture}` : ''
-    selectedSpot.value = spots.value.find(s => s.weatherId === post.weatherId) || null
+    selectedSpot.value = spots.value.find((s) => s.spotId === post.weatherId) || null
   } catch (err) {
     alert('게시글 정보를 불러오는 데 실패했습니다.')
     console.error(err)
@@ -129,22 +111,22 @@ const submitEdit = async () => {
     const postDto = {
       title: title.value,
       content: content.value,
-      weatherId: selectedSpot.value.id,
+      weatherId: selectedSpot.value.spotId,
     }
 
     const formData = new FormData()
     formData.append(
       'post',
       new Blob([JSON.stringify(postDto)], {
-        type: 'application/json'
-      })
+        type: 'application/json',
+      }),
     )
     if (pictureFile.value) {
       formData.append('picture', pictureFile.value)
     }
 
     await api.patch(`/post/${id}`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: { 'Content-Type': 'multipart/form-data' },
     })
 
     alert('게시글이 수정되었습니다.')

@@ -29,7 +29,9 @@
 
       <!-- 사진 업로드 -->
       <div>
-        <label for="picture" class="block text-sm font-semibold mb-1 text-gray-300">사진 업로드</label>
+        <label for="picture" class="block text-sm font-semibold mb-1 text-gray-300"
+          >사진 업로드</label
+        >
         <input
           id="picture"
           type="file"
@@ -44,7 +46,7 @@
         <label for="spot" class="block text-sm font-semibold mb-1 text-gray-300">장소 선택</label>
         <select v-model="selectedSpot" class="w-full p-2 rounded border text-gray-800" required>
           <option :value="null" disabled>장소를 선택하세요</option>
-          <option v-for="spot in spots" :key="spot.id" :value="spot">{{ spot.name }}</option>
+          <option v-for="spot in spots" :key="spot.spotId" :value="spot">{{ spot.name }}</option>
         </select>
       </div>
 
@@ -60,10 +62,7 @@
     </form>
 
     <!-- 로딩 오버레이 -->
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
-    >
+    <div v-if="isLoading" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div class="text-white text-xl font-semibold animate-pulse">등록 중입니다...</div>
     </div>
   </div>
@@ -103,7 +102,7 @@ const submitPost = async () => {
     const postDto = {
       title: title.value,
       content: content.value,
-      weatherId: selectedSpot.value.id,
+      weatherId: selectedSpot.value.spotId,
     }
 
     const jsonBlob = new Blob([JSON.stringify(postDto)], {

@@ -1,5 +1,6 @@
+// src/api/calendar.js
 import axios from './axios'
 
-export async function fetchCalendarWeather(spotId) {
-  return await axios.get(`/calendar-weather/${spotId}`)
+export const fetchCalendarWeather = (spotId) => {
+  return axios.get(`/calendar-weather-history/with-history/${spotId}`)
 }

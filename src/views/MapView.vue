@@ -96,21 +96,20 @@ onMounted(async () => {
             alt="마커"
             :class="[
               'w-6 h-6 object-contain cursor-pointer transition-transform duration-200',
-              hoveredMarkerId === marker.id ? 'rotate-animation' : ''
+              hoveredMarkerId === marker.id ? 'rotate-animation' : '',
             ]"
           />
 
           <!-- Hover 정보 박스 -->
-<div
-  v-if="hoveredMarkerId === marker.id"
-  :class="[
-    'absolute z-50 bg-gray-100 text-orange-600 px-6 py-5 w-72 sm:w-80 md:w-96 shadow-2xl rounded-2xl transition-all duration-200',
-    parseFloat(marker.top) > 70 ? 'translate-y-[-100%] mt-2' : 'mt-4'
-  ]"
-  @mouseenter="hoveredMarkerId = marker.id"
-  @mouseleave="hoveredMarkerId = null"
->
-
+          <div
+            v-if="hoveredMarkerId === marker.id"
+            :class="[
+              'absolute z-50 bg-gray-100 text-orange-600 px-6 py-5 w-72 sm:w-80 md:w-96 shadow-2xl rounded-2xl transition-all duration-200',
+              parseFloat(marker.top) > 70 ? 'translate-y-[-100%] mt-2' : 'mt-4',
+            ]"
+            @mouseenter="hoveredMarkerId = marker.id"
+            @mouseleave="hoveredMarkerId = null"
+          >
             <div class="font-bold text-xl sm:text-3xl mb-4">{{ marker.name }}</div>
 
             <div class="text-black text-lg sm:text-2xl font-semibold mb-4">

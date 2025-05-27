@@ -39,17 +39,23 @@
         <!-- 날짜 셀 -->
         <div class="grid grid-cols-7 text-center gap-px">
           <!-- 공백 -->
-          <div v-for="n in startBlank" :key="'blank' + n" class="border h-36 bg-gray-50"></div>
+          <div v-for="n in startBlank" :key="'blank' + n" class="border h-44 bg-gray-50"></div>
 
           <!-- 날짜 -->
           <div
             v-for="item in daysInMonth"
             :key="item.date"
-            class="border h-36 p-3 flex flex-col justify-start items-center"
+            class="border h-44 p-2 flex flex-col justify-start items-center text-sm leading-snug"
           >
-            <div class="text-lg font-semibold">{{ dayjs(item.date).date() }}</div>
-            <div class="text-lg" v-if="item.sunriseTime">🌅 {{ item.sunriseTime }}</div>
-            <div class="text-lg" v-if="item.sunsetTime">🌇 {{ item.sunsetTime }}</div>
+            <div class="text-base font-semibold">{{ dayjs(item.date).date() }}</div>
+            <div v-if="item.sunriseTime">🌅 {{ item.sunriseTime }}</div>
+            <div v-if="item.sunsetTime">🌇 {{ item.sunsetTime }}</div>
+            <div v-if="item.weather2023" class="mt-1 text-gray-700">
+              2023: {{ item.weather2023.temperature }}℃ / {{ item.weather2023.description }}
+            </div>
+            <div v-if="item.weather2024" class="text-gray-700">
+              2024: {{ item.weather2024.temperature }}℃ / {{ item.weather2024.description }}
+            </div>
           </div>
         </div>
       </div>
@@ -68,7 +74,7 @@ const spotId = route.params.spotId
 const spotName = route.query.name || '알 수 없는 장소'
 const calendarData = ref([])
 
-const currentMonth = ref(dayjs()) // 현재 보고 있는 달
+const currentMonth = ref(dayjs())
 
 onMounted(async () => {
   const res = await fetchCalendarWeather(spotId)
@@ -90,6 +96,8 @@ const daysInMonth = computed(() => {
       date: d.format('YYYY-MM-DD'),
       sunriseTime: found?.sunriseTime || '',
       sunsetTime: found?.sunsetTime || '',
+      weather2023: found?.weather2023 || null,
+      weather2024: found?.weather2024 || null,
     })
   }
   return days

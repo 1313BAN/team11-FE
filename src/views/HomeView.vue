@@ -20,7 +20,7 @@
           v-if="weatherImage"
           :src="weatherImage"
           alt="날씨 이미지"
-          class="w-80 h-80 object-contain mt-32 mb-12"
+          class="w-80 h-80 object-contain mt-32 mb-12 floating wobble rotate-on-hover"
         />
       </div>
 
@@ -62,7 +62,7 @@ const weatherImage = computed(() => {
   if (text.includes('눈')) return new URL('@/assets/weather/snow.png', import.meta.url).href
   if (text.includes('맑음')) return new URL('@/assets/weather/sunny.png', import.meta.url).href
   if (text.includes('흐림')) return new URL('@/assets/weather/cloudy.png', import.meta.url).href
-  return new URL('@/assets/unknown.png', import.meta.url).href
+  return new URL('@/assets/weather/question.png', import.meta.url).href
 })
 
 const formatDate = () => {
@@ -99,3 +99,47 @@ onMounted(() => {
   )
 })
 </script>
+<style scoped>
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3.5deg);
+  }
+  75% {
+    transform: rotate(-3.5deg);
+  }
+}
+.wobble {
+  animation: wobble 2.5s ease-in-out infinite;
+}
+@keyframes rotate360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-on-hover:hover {
+  animation: rotate360 2s linear infinite;
+}
+</style>

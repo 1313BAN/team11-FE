@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 max-w-3xl mx-auto text-white">
+  <div class="p-6 max-w-3xl mx-auto text-white mt-5">
     <!-- 제목 + 버튼 -->
     <div class="flex justify-between items-start mb-2">
       <div class="flex items-center gap-2">
@@ -8,18 +8,18 @@
           alt="로고"
           class="w-5 h-5 object-contain"
         />
-        <h2 class="text-2xl font-bold text-orange-400">{{ post.title }}</h2>
+        <h2 class="text-3xl font-bold text-orange-400">{{ post.title }}</h2>
       </div>
 
-      <div v-if="post.username === username" class="space-x-2 text-sm">
+      <div v-if="post.username === username" class="space-x-2 text-lg">
         <button @click="editPost" class="text-blue-400 hover:underline">수정</button>
         <button @click="deletePost" class="text-red-400 hover:underline">삭제</button>
       </div>
     </div>
 
     <!-- 작성자 및 날씨 -->
-    <p class="text-sm text-gray-300 mb-1">작성자: {{ post.nickname }}</p>
-    <p class="text-sm text-gray-400 mb-4">장소: {{ post.weatherName }}</p>
+    <p class="text-lg text-gray-300 ">작성자: {{ post.nickname }}</p>
+    <p class="text-lg text-gray-400 mb-4">장소: {{ post.weatherName }}</p>
 
     <!-- 이미지 -->
     <img
@@ -30,27 +30,27 @@
     />
 
     <!-- 내용 -->
-    <p class="mb-6 whitespace-pre-wrap leading-relaxed text-gray-200">{{ post.content }}</p>
+    <p class="text-lg mb-6 whitespace-pre-wrap leading-relaxed text-gray-200">{{ post.content }}</p>
 
     <!-- 댓글 작성 -->
     <div class="mb-8">
-      <h3 class="text-lg font-semibold text-gray-100 mb-2">댓글 작성</h3>
+      <h3 class="text-2xl font-semibold text-gray-100 mb-2">댓글 작성</h3>
       <textarea
         v-model="newComment"
-        class="w-full border p-2 rounded text-gray-900"
+        class="text-xl font-bold w-full border p-2 rounded text-gray-900"
         rows="3"
         placeholder="댓글을 입력하세요"
       ></textarea>
       <button
         @click="submitComment"
-        class="mt-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
+        class="mt-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-1 rounded text-lg"
       >
         작성
       </button>
     </div>
 
     <!-- 댓글 리스트 -->
-    <h3 class="text-lg font-semibold text-gray-100 mb-3">댓글</h3>
+    <h3 class="text-2xl font-semibold text-gray-100 mb-3">댓글</h3>
     <div v-if="post.comments.length === 0" class="text-gray-400">댓글이 없습니다.</div>
     <ul class="space-y-2">
       <li
@@ -59,16 +59,16 @@
         class=" p-3 rounded bg-[#202020]"
       >
         <div class="flex justify-between items-center">
-          <span class="text-sm font-semibold text-orange-300">{{ comment.username }}</span>
+          <span class="text-lg font-semibold text-orange-300">{{ comment.username }}</span>
           <div
             v-if="comment.username === username"
             class="text-xs space-x-2 text-blue-400"
           >
-            <button @click="openEditModal(comment)">수정</button>
-            <button @click="deleteComment(comment.id)" class="text-red-400">삭제</button>
+            <button @click="openEditModal(comment)" class="text-base">수정</button>
+            <button @click="deleteComment(comment.id)" class="text-base text-red-400">삭제</button>
           </div>
         </div>
-        <p class="mt-2 text-sm text-gray-200">{{ comment.content }}</p>
+        <p class="mt-2 text-xl text-gray-200">{{ comment.content }}</p>
       </li>
     </ul>
 

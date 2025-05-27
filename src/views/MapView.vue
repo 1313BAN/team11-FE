@@ -3,21 +3,20 @@ import { ref, onMounted } from 'vue'
 import { fetchSunInfoList } from '@/api/map'
 import { useRouter } from 'vue-router'
 
-const hoveredMarker = ref(null)
+const hoveredMarkerId = ref(null) // ✅ 마커 + 박스 hover 추적용
 const markers = ref([])
 
 const router = useRouter()
 
 function goToCalendar(marker) {
-  console.log('➡️ 이동할 marker:', marker)
   router.push({
     name: 'CalendarView',
     params: { spotId: marker.id },
     query: { name: marker.name },
   })
 }
-const goToNearby = (spot) => {
-  console.log('🔍 marker:', spot) // ✅ 여기에 추가
+
+function goToNearby(spot) {
   router.push({
     name: 'NearbyAttractions',
     query: {
@@ -28,16 +27,32 @@ const goToNearby = (spot) => {
   })
 }
 
-// 지도 위에서의 마커 위치 % 수기 매핑
+// 추천도에 따른 마커 이미지 선택
+function getMarkerImage(recommendation) {
+  switch (recommendation) {
+    case '추천':
+      return new URL('@/assets/marker/good.png', import.meta.url).href
+    case '보통':
+      return new URL('@/assets/marker/soso.png', import.meta.url).href
+    case '비추천':
+      return new URL('@/assets/marker/bad.png', import.meta.url).href
+    case '위험':
+      return new URL('@/assets/marker/danger.png', import.meta.url).href
+    default:
+      return new URL('@/assets/marker/default.png', import.meta.url).href
+  }
+}
+
+// 지도 위 마커 위치 (수기 % 좌표)
 const positionMap = {
-  1: { top: '15%', left: '72%' }, // 정동진
-  2: { top: '46.1%', left: '82%' }, // 호미곶
-  3: { top: '52%', left: '81%' }, // 문무대왕릉
-  4: { top: '57%', left: '77%' }, // 대왕암공원
-  5: { top: '59%', left: '72%' }, // 해동용궁사
-  6: { top: '90%', left: '25%' }, // 성산일출봉
-  7: { top: '15%', left: '20%' }, // 석산곶
-  8: { top: '13%', left: '38%' }, // 아차산
+  1: { top: '15%', left: '72%' },
+  2: { top: '46.1%', left: '82%' },
+  3: { top: '52%', left: '81%' },
+  4: { top: '57%', left: '77%' },
+  5: { top: '59%', left: '72%' },
+  6: { top: '90%', left: '25%' },
+  7: { top: '15%', left: '20%' },
+  8: { top: '13%', left: '38%' },
 }
 
 onMounted(async () => {
@@ -62,7 +77,6 @@ onMounted(async () => {
 <template>
   <div class="w-screen h-screen flex justify-center items-center">
     <div class="relative h-[90vh]">
-      <!-- ✅ 세로 기준 확대 -->
       <!-- 지도 이미지 -->
       <img src="@/assets/korea.png" class="h-full object-contain" />
 
@@ -72,18 +86,26 @@ onMounted(async () => {
         :key="marker.id"
         class="absolute"
         :style="{ top: marker.top, left: marker.left }"
-        @mouseenter="hoveredMarker = marker"
-        @mouseleave="hoveredMarker = null"
+        @mouseenter="hoveredMarkerId = marker.id"
+        @mouseleave="hoveredMarkerId = null"
       >
         <div class="relative flex flex-col items-start">
+          <!-- 마커 이미지 -->
           <img
-            src="@/assets/marker/marker4.png"
+            :src="getMarkerImage(marker.recommendation)"
             alt="마커"
-            class="w-9 h-9 object-contain cursor-pointer transition-transform duration-200 hover:scale-125"
+            :class="[
+              'w-6 h-6 object-contain cursor-pointer transition-transform duration-200',
+              hoveredMarkerId === marker.id ? 'rotate-animation' : ''
+            ]"
           />
+
+          <!-- Hover 정보 박스 -->
           <div
-            v-if="hoveredMarker?.id === marker.id"
+            v-if="hoveredMarkerId === marker.id"
             class="mt-4 bg-gray-100 text-black px-6 py-5 w-72 sm:w-80 md:w-96 shadow-2xl z-50 rounded-2xl transition-all duration-200"
+            @mouseenter="hoveredMarkerId = marker.id"
+            @mouseleave="hoveredMarkerId = null"
           >
             <div class="font-bold text-xl sm:text-3xl mb-4">{{ marker.name }}</div>
 
@@ -125,3 +147,18 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes rotateMarker {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-animation {
+  animation: rotateMarker 1.2s linear infinite;
+}
+</style>

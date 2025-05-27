@@ -61,12 +61,10 @@ onMounted(async () => {
 
 <template>
   <div class="w-screen h-screen flex justify-center items-center">
-    <div class="relative h-[90vh]"> <!-- ✅ 세로 기준 확대 -->
+    <div class="relative h-[90vh]">
+      <!-- ✅ 세로 기준 확대 -->
       <!-- 지도 이미지 -->
-      <img
-        src="@/assets/korea.png"
-        class="h-full object-contain"
-      />
+      <img src="@/assets/korea.png" class="h-full object-contain" />
 
       <!-- 마커 + Hover 정보 -->
       <div
@@ -85,10 +83,11 @@ onMounted(async () => {
           />
           <div
             v-if="hoveredMarker?.id === marker.id"
-            class="mt-2 bg-gray-100 text-black p-3 w-52 shadow-lg z-50 rounded-lg"
+            class="mt-4 bg-gray-100 text-black px-6 py-5 w-72 sm:w-80 md:w-96 shadow-2xl z-50 rounded-2xl transition-all duration-200"
           >
-            <div class="font-bold text-lg mb-2">{{ marker.name }}</div>
-            <div class="text-base font-semibold mb-3">
+            <div class="font-bold text-xl sm:text-3xl mb-4">{{ marker.name }}</div>
+
+            <div class="text-lg sm:text-2xl font-semibold mb-4">
               🌅 관람:
               <span
                 :class="{
@@ -101,15 +100,21 @@ onMounted(async () => {
                 {{ marker.recommendation }}
               </span>
             </div>
-            <div class="text-sm text-gray-800 mb-3">
-              ☀ 일출: {{ marker.sunrise }}<br />
-              🌇 일몰: {{ marker.sunset }}
+
+            <div class="text-base sm:text-xl text-gray-800 mb-5 leading-relaxed">
+              ☀ <strong>일출:</strong> {{ marker.sunrise }}<br />
+              🌇 <strong>일몰:</strong> {{ marker.sunset }}
             </div>
-            <button class="text-blue-500 text-sm underline mb-1" @click="goToNearby(marker)">
+
+            <button
+              class="text-blue-600 text-base sm:text-lg underline font-xl mb-3"
+              @click="goToNearby(marker)"
+            >
               자세히 보기
             </button>
+
             <div
-              class="text-blue-700 cursor-pointer text-sm underline"
+              class="text-blue-700 cursor-pointer text-base sm:text-lg underline font-xl"
               @click="goToCalendar(marker)"
             >
               달력으로 가기

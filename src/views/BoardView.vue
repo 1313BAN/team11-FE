@@ -2,25 +2,30 @@
   <div class="min-h-screen p-6 max-w-5xl mx-auto">
     <!-- 상단 헤더 -->
     <div class="flex justify-between items-center mb-6 mt-8">
-      <h2 class="text-2xl font-bold text-white">📌 게시판</h2>
+      <h2 class="text-4xl font-bold text-white">📌 게시판</h2>
       <button
         @click="goToCreate"
-        class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded shadow"
+        class="bg-orange-600 hover:bg-orange-700 text-white text-xl px-4 py-2 rounded shadow"
       >
         글 작성
       </button>
     </div>
 
     <!-- Spot 필터 -->
-    <select v-model="selectedSpotId" class="bg-[#202020] text-white p-2 rounded mb-4 w-full">
+    <select
+      v-model="selectedSpotId"
+      class="bg-[#202020] text-white p-2 rounded mb-4 w-full text-2xl"
+    >
       <option value="">전체 보기</option>
-      <option v-for="spot in spots" :key="spot.spotId" :value="spot.spotId">🌅 {{ spot.name }}</option>
+      <option v-for="spot in spots" :key="spot.spotId" :value="spot.spotId">
+        🌅 {{ spot.name }}
+      </option>
     </select>
 
     <!-- 요약 및 평점 -->
-    <div v-if="summary" class="bg-[#202020] text-white p-4 rounded mb-6">
-      <p class="text-sm mb-1">📝 요약: {{ summary }}</p>
-      <p class="text-sm">⭐ AI 평점: {{ averageScore }}점</p>
+    <div v-if="summary" class="bg-[#202020] text-white p-4 rounded mb-6 text-xl">
+      <p class="mb-1">📝 요약: {{ summary }}</p>
+      <p class="">⭐ AI 평점: {{ averageScore }}점</p>
     </div>
 
     <!-- 게시글 리스트 -->
@@ -32,15 +37,17 @@
         @click="goToDetail(post.id)"
       >
         <!-- 내용 -->
-        <div class="p-4 flex-1 text-white">
+        <div class="p-4 flex-1 text-white text-2xl">
           <div class="flex items-center gap-2 mb-1">
             <img src="@/assets/logo.png" alt="마커" class="w-5 h-5 object-contain cursor-pointer" />
             <h3 class="text-lg text-orange-500 font-semibold truncate">{{ post.title }}</h3>
           </div>
 
-          <p class="text-sm text-gray-300 mb-1">작성자: {{ post.nickname }}</p>
-          <p class="text-sm text-gray-400 line-clamp-2">{{ post.content }}</p>
-          <p class="text-sm text-gray-400 mt-1">🌤 {{ post.weatherName }}</p>
+          <p class="text-lg text-gray-300 mb-1"></p>
+          <p class="text-gray-400 line-clamp-2">{{ post.content }}</p>
+          <p class="text-lg text-gray-400 mt-1">
+            작성자: {{ post.nickname }} 🌤 : {{ post.weatherName }}
+          </p>
 
           <!-- 본인 글만 수정/삭제 -->
           <div v-if="post.username === username" class="mt-2 space-x-3">

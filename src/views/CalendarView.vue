@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen w-screen bg-black text-white flex justify-center items-center py-20">
-    <div class="w-full max-w-[1100px] p-6">
+    <div class="w-full max-w-[1400px] p-6">
       <!-- 달력 카드 -->
-      <div class="bg-white text-black p-10 rounded-xl shadow-xl w-full">
+      <div class="bg-white text-black p-10 rounded-xl shadow-xl w-full overflow-x-auto">
         <!-- 헤더 -->
         <div class="flex justify-between items-center mb-8">
           <button
@@ -30,30 +30,39 @@
         </div>
 
         <!-- 요일 헤더 -->
-        <div class="grid grid-cols-7 text-center font-bold border-b pb-4 mb-4 text-lg">
+        <div
+          class="grid grid-cols-7 text-center font-bold border-b pb-4 mb-4 text-lg min-w-[1260px]"
+        >
           <div v-for="day in ['일', '월', '화', '수', '목', '금', '토']" :key="day">
             {{ day }}
           </div>
         </div>
 
         <!-- 날짜 셀 -->
-        <div class="grid grid-cols-7 text-center gap-px">
+        <div class="grid grid-cols-7 text-center gap-px min-w-[1260px]">
           <!-- 공백 -->
-          <div v-for="n in startBlank" :key="'blank' + n" class="border h-44 bg-gray-50"></div>
+          <div
+            v-for="n in startBlank"
+            :key="'blank' + n"
+            class="border h-44 bg-gray-50 min-w-[180px]"
+          ></div>
 
           <!-- 날짜 -->
           <div
             v-for="item in daysInMonth"
             :key="item.date"
-            class="border h-44 p-2 flex flex-col justify-start items-center text-lg font-bold leading-snug"
+            class="border h-44 p-2 flex flex-col justify-start items-center text-lg font-bold leading-snug min-w-[180px]"
           >
             <div class="font-bold">{{ dayjs(item.date).date() }}</div>
             <div class="font-bold" v-if="item.sunriseTime">🌅 {{ item.sunriseTime }}</div>
             <div class="font-bold" v-if="item.sunsetTime">🌇 {{ item.sunsetTime }}</div>
-            <div v-if="item.weather2023" class="mt-1 font-bold text-gray-700">
+            <!-- 2023 날씨 -->
+            <div v-if="item.weather2023" class="mt-1 font-bold text-black text-sm">
               2023: {{ item.weather2023.temperature }}℃ / {{ item.weather2023.description }}
             </div>
-            <div v-if="item.weather2024" class="font-bold text-gray-700">
+
+            <!-- 2024 날씨 -->
+            <div v-if="item.weather2024" class="font-bold text-black text-sm">
               2024: {{ item.weather2024.temperature }}℃ / {{ item.weather2024.description }}
             </div>
           </div>

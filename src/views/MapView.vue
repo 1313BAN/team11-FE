@@ -46,12 +46,12 @@ function getMarkerImage(recommendation) {
 // 지도 위 마커 위치 (수기 % 좌표)
 const positionMap = {
   1: { top: '15%', left: '72%' },
-  2: { top: '46.1%', left: '82%' },
-  3: { top: '52%', left: '81%' },
-  4: { top: '57%', left: '77%' },
-  5: { top: '59%', left: '72%' },
-  6: { top: '90%', left: '25%' },
-  7: { top: '15%', left: '20%' },
+  2: { top: '45.6%', left: '86%' },
+  3: { top: '52%', left: '85%' }, // 그 위
+  4: { top: '57%', left: '82.5%' }, // 그 위
+  5: { top: '59%', left: '80%' }, // 그 위
+  6: { top: '92%', left: '30%' }, // 제주도
+  7: { top: '15%', left: '21%' },
   8: { top: '13%', left: '38%' },
 }
 

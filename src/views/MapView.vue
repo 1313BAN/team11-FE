@@ -60,10 +60,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="w-screen h-screen/2 flex justify-center items-center">
-    <div class="relative w-[400px]">
+  <div class="w-screen h-screen flex justify-center items-center">
+    <div class="relative h-[90vh]"> <!-- ✅ 세로 기준 확대 -->
       <!-- 지도 이미지 -->
-      <img src="@/assets/korea.png" class="w-full h-auto" />
+      <img
+        src="@/assets/korea.png"
+        class="h-full object-contain"
+      />
 
       <!-- 마커 + Hover 정보 -->
       <div
@@ -74,24 +77,17 @@ onMounted(async () => {
         @mouseenter="hoveredMarker = marker"
         @mouseleave="hoveredMarker = null"
       >
-        <!-- 마커와 Hover 박스를 묶은 컨테이너 -->
         <div class="relative flex flex-col items-start">
-          <!-- 마커 이미지 -->
           <img
             src="@/assets/marker/marker4.png"
             alt="마커"
             class="w-9 h-9 object-contain cursor-pointer transition-transform duration-200 hover:scale-125"
           />
-
-          <!-- Hover 정보 박스 -->
           <div
             v-if="hoveredMarker?.id === marker.id"
             class="mt-2 bg-gray-100 text-black p-3 w-52 shadow-lg z-50 rounded-lg"
           >
-            <!-- 장소명 -->
             <div class="font-bold text-lg mb-2">{{ marker.name }}</div>
-
-            <!-- 추천도 강조 -->
             <div class="text-base font-semibold mb-3">
               🌅 관람:
               <span
@@ -105,14 +101,10 @@ onMounted(async () => {
                 {{ marker.recommendation }}
               </span>
             </div>
-
-            <!-- 일출 일몰 정보 -->
             <div class="text-sm text-gray-800 mb-3">
               ☀ 일출: {{ marker.sunrise }}<br />
               🌇 일몰: {{ marker.sunset }}
             </div>
-
-            <!-- 버튼 -->
             <button class="text-blue-500 text-sm underline mb-1" @click="goToNearby(marker)">
               자세히 보기
             </button>
@@ -128,9 +120,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.custom-header {
-  background-color: hsla(20, 80%, 55%, 1); /* 오렌지 계열 강조 */
-}
-</style>

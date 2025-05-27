@@ -9,8 +9,8 @@
     <div v-else class="space-y-10">
       <!-- 날짜 및 지역 -->
       <div class="text-center">
-        <div class="text-2xl font-bold">📅 {{ currentDate }}</div>
-        <div class="text-base text-gray-400 mt-1">📍 {{ regionName }}</div>
+        <div class="text-4xl font-bold">📅 {{ currentDate }}</div>
+        <div class="text-xl text-gray-400 mt-1">📍 {{ regionName }}</div>
       </div>
 
       <!-- 날씨 이미지 -->
@@ -20,13 +20,13 @@
     v-if="weatherImage"
     :src="weatherImage"
     alt="날씨 이미지"
-    class="w-32 h-32 object-contain"
+    class="w-44 h-44 object-contain"
   />
 </div>
 
 
       <!-- 날씨 정보 (가로 정렬) -->
-      <div class="flex gap-12 justify-center text-lg">
+      <div class="flex gap-12 justify-center text-xl">
         <!-- 일출/일몰 -->
         <div class="text-center">
           <div class="font-semibold mb-1">🌅 일출 / 일몰</div>

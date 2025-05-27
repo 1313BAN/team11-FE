@@ -12,7 +12,7 @@
         ×
       </button>
 
-      <h2 class="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">
+      <h2 class="text-2xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
         ✏️ 닉네임 수정
       </h2>
 
@@ -20,12 +20,12 @@
         v-model="newNickname"
         type="text"
         placeholder="새 닉네임을 입력하세요"
-        class="w-full p-1 rounded border text-gray-800 mb-4"
+        class="text-lg font-bold w-full p-1 rounded border text-gray-800 mb-4"
       />
 
       <button
         @click="handleUpdate"
-        class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded"
+        class="text-lg w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded"
       >
         저장
       </button>

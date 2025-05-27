@@ -1,6 +1,9 @@
 import api from './axios'
 
 export const getPostList = () => api.get('/post')
+
+export const getMyPostList = () => api.get('/post/my')
+
 export const getPostDetail = (id) => api.get(`/post/${id}`)
 
 

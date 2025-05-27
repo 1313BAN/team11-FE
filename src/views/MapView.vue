@@ -101,15 +101,19 @@ onMounted(async () => {
           />
 
           <!-- Hover 정보 박스 -->
-          <div
-            v-if="hoveredMarkerId === marker.id"
-            class="mt-4 bg-gray-100 text-black px-6 py-5 w-72 sm:w-80 md:w-96 shadow-2xl z-50 rounded-2xl transition-all duration-200"
-            @mouseenter="hoveredMarkerId = marker.id"
-            @mouseleave="hoveredMarkerId = null"
-          >
+<div
+  v-if="hoveredMarkerId === marker.id"
+  :class="[
+    'absolute z-50 bg-gray-100 text-orange-600 px-6 py-5 w-72 sm:w-80 md:w-96 shadow-2xl rounded-2xl transition-all duration-200',
+    parseFloat(marker.top) > 70 ? 'translate-y-[-100%] mt-2' : 'mt-4'
+  ]"
+  @mouseenter="hoveredMarkerId = marker.id"
+  @mouseleave="hoveredMarkerId = null"
+>
+
             <div class="font-bold text-xl sm:text-3xl mb-4">{{ marker.name }}</div>
 
-            <div class="text-lg sm:text-2xl font-semibold mb-4">
+            <div class="text-black text-lg sm:text-2xl font-semibold mb-4">
               🌅 관람:
               <span
                 :class="{
@@ -123,20 +127,20 @@ onMounted(async () => {
               </span>
             </div>
 
-            <div class="text-base sm:text-xl text-gray-800 mb-5 leading-relaxed">
+            <div class="font-bold sm:text-xl text-gray-800 mb-5 leading-relaxed">
               ☀ <strong>일출:</strong> {{ marker.sunrise }}<br />
               🌇 <strong>일몰:</strong> {{ marker.sunset }}
             </div>
 
             <button
-              class="text-blue-600 text-base sm:text-lg underline font-xl mb-3"
+              class="text-orange-600 font-bold sm:text-lg underline font-xl mb-3"
               @click="goToNearby(marker)"
             >
               자세히 보기
             </button>
 
             <div
-              class="text-blue-700 cursor-pointer text-base sm:text-lg underline font-xl"
+              class="text-orange-700 font-bold cursor-pointer text-base sm:text-lg underline font-xl"
               @click="goToCalendar(marker)"
             >
               달력으로 가기

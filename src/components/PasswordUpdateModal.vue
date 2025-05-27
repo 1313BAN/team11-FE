@@ -13,19 +13,19 @@
         ×
       </button>
 
-      <h2 class="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">
+      <h2 class="text-2xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
         🔐 비밀번호 변경
       </h2>
 
       <!-- 현재 비밀번호 -->
 <div>
-  <label for="current" class="block text-xs font-bold mb-1 text-gray-300">현재 비밀번호</label>
+  <label for="current" class="block text-xl font-bold mb-1 text-gray-300">현재 비밀번호</label>
   <Password
     id="current"
     v-model="currentPassword"
     toggleMask
     class="w-full"
-    inputClass="w-full p-1 border rounded text-gray-800"
+    inputClass="text-lg w-full p-1 border rounded text-gray-800"
     :feedback="false"
   />
   <p class="text-transparent text-xs mt-1 min-h-[1rem]">_</p>
@@ -33,16 +33,16 @@
 
 <!-- 새 비밀번호 -->
 <div>
-  <label for="new" class="block text-xs font-bold mb-1 text-gray-300">새 비밀번호</label>
+  <label for="new" class="block text-xl font-bold mb-1 text-gray-300">새 비밀번호</label>
   <Password
     id="new"
     v-model="newPassword"
     toggleMask
     class="w-full"
-    inputClass="w-full p-1 border rounded text-gray-800"
+    inputClass="text-lg w-full p-1 border rounded text-gray-800"
     :feedback="false"
   />
-  <p class="text-red-500 text-xs mt-1 min-h-[1rem]">
+  <p class="text-red-500 text-xl mt-1 min-h-[2rem]">
     <span v-if="newPassword && !isPasswordValid">영문자와 숫자를 포함한 8~20자여야 합니다.</span>
     <span v-else-if="newPassword && currentPassword === newPassword">기존 비밀번호와 다르게 입력해주세요.</span>
   </p>

@@ -45,15 +45,15 @@
           <div
             v-for="item in daysInMonth"
             :key="item.date"
-            class="border h-44 p-2 flex flex-col justify-start items-center text-sm leading-snug"
+            class="border h-44 p-2 flex flex-col justify-start items-center text-lg font-bold leading-snug"
           >
-            <div class="text-base font-semibold">{{ dayjs(item.date).date() }}</div>
-            <div v-if="item.sunriseTime">🌅 {{ item.sunriseTime }}</div>
-            <div v-if="item.sunsetTime">🌇 {{ item.sunsetTime }}</div>
-            <div v-if="item.weather2023" class="mt-1 text-gray-700">
+            <div class="font-bold">{{ dayjs(item.date).date() }}</div>
+            <div class="font-bold" v-if="item.sunriseTime">🌅 {{ item.sunriseTime }}</div>
+            <div class="font-bold" v-if="item.sunsetTime">🌇 {{ item.sunsetTime }}</div>
+            <div v-if="item.weather2023" class="mt-1 font-bold text-gray-700">
               2023: {{ item.weather2023.temperature }}℃ / {{ item.weather2023.description }}
             </div>
-            <div v-if="item.weather2024" class="text-gray-700">
+            <div v-if="item.weather2024" class="font-bold text-gray-700">
               2024: {{ item.weather2024.temperature }}℃ / {{ item.weather2024.description }}
             </div>
           </div>

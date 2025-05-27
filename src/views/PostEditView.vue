@@ -1,48 +1,48 @@
 <template>
-  <div class="p-6 max-w-2xl mx-auto text-white">
-    <h2 class="text-2xl font-bold mb-6 text-orange-400">✏️ 게시글 수정</h2>
+  <div class="p-6 max-w-2xl mx-auto text-white text-base"> <!-- 기본 폰트 크기 ↑ -->
+    <h2 class="text-3xl font-bold mb-6 text-orange-400">✏️ 게시글 수정</h2>
 
     <form @submit.prevent="submitEdit" class="space-y-4">
       <!-- 제목 -->
       <div>
-        <label class="block text-sm font-semibold mb-1 text-gray-300">제목</label>
+        <label class="block text-base font-semibold mb-1 text-gray-300">제목</label>
         <input
           v-model="title"
           type="text"
-          class="w-full p-2 rounded border text-gray-800"
+          class="w-full p-3 font-bold rounded border text-gray-800 text-base"
           required
         />
       </div>
 
       <!-- 내용 -->
       <div>
-        <label class="block text-sm font-semibold mb-1 text-gray-300">내용</label>
+        <label class="block text-base font-semibold mb-1 text-gray-300">내용</label>
         <textarea
           v-model="content"
           rows="6"
-          class="w-full p-2 rounded border text-gray-800"
+          class="w-full p-3 font-bold rounded border text-gray-800 text-base"
           required
         ></textarea>
       </div>
 
       <!-- 기존 이미지 -->
       <div v-if="pictureUrl">
-        <label class="block text-sm font-semibold mb-1 text-gray-300">기존 이미지</label>
+        <label class="block text-base font-semibold mb-1 text-gray-300">기존 이미지</label>
         <img :src="pictureUrl" alt="기존 이미지" class="w-32 h-32 object-cover rounded border" />
       </div>
 
       <!-- 사진 수정 -->
       <div>
-        <label class="block text-sm font-semibold mb-1 text-gray-300">사진 수정 (선택)</label>
-        <input type="file" @change="handleFileChange" accept="image/*" class="text-sm" />
+        <label class="block text-base font-semibold mb-1 text-gray-300">사진 수정 (선택)</label>
+        <input type="file" @change="handleFileChange" accept="image/*" class="text-base" />
       </div>
 
       <!-- 장소 선택 -->
       <div>
-        <label class="block text-sm font-semibold mb-1 text-gray-300">장소 선택</label>
-        <select v-model="selectedSpot" class="w-full p-2 rounded border text-gray-800" required>
-          <option :value="null" disabled>장소를 선택하세요</option>
-          <option v-for="spot in spots" :key="spot.id" :value="spot">
+        <label class="block text-base font-semibold mb-1 text-gray-300">장소 선택</label>
+        <select v-model="selectedSpot" class="w-full p-3 rounded font-bold border text-gray-800 text-base" required>
+          <option :value="null" disabled >장소를 선택하세요</option>
+          <option v-for="spot in spots" :key="spot.id" :value="spot" class="font-bold">
             {{ spot.name }}
           </option>
         </select>
@@ -52,7 +52,7 @@
       <div class="flex justify-end">
         <button
           type="submit"
-          class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
+          class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded text-base font-semibold"
         >
           수정 완료
         </button>
@@ -61,10 +61,11 @@
 
     <!-- 로딩 오버레이 -->
     <div v-if="isLoading" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div class="text-white text-xl font-semibold animate-pulse">수정 중입니다...</div>
+      <div class="text-white text-2xl font-semibold animate-pulse">수정 중입니다...</div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from 'vue'

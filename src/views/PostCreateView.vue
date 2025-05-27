@@ -1,50 +1,57 @@
 <template>
-  <div class="p-6 max-w-2xl mx-auto text-white">
-    <h2 class="text-2xl font-bold mb-6 text-orange-400">📝 게시글 작성</h2>
+  <div class="p-6 max-w-2xl mx-auto text-white text-base">
+    <h2 class="text-3xl font-bold mb-6 text-orange-400">📝 게시글 작성</h2>
 
     <form @submit.prevent="submitPost" class="space-y-4">
       <!-- 제목 -->
       <div>
-        <label for="title" class="block text-sm font-semibold mb-1 text-gray-300">제목</label>
+        <label for="title" class="block text-base font-semibold mb-1 text-gray-300">제목</label>
         <input
           v-model="title"
           id="title"
           type="text"
-          class="w-full p-2 rounded border text-gray-800"
+          class="w-full p-3 rounded border text-gray-800 text-base"
           required
         />
       </div>
 
       <!-- 내용 -->
       <div>
-        <label for="content" class="block text-sm font-semibold mb-1 text-gray-300">내용</label>
+        <label for="content" class="block text-base font-semibold mb-1 text-gray-300">내용</label>
         <textarea
           v-model="content"
           id="content"
           rows="6"
-          class="w-full p-2 rounded border text-gray-800"
+          class="w-full p-3 rounded border text-gray-800 text-base"
           required
         ></textarea>
       </div>
 
       <!-- 사진 업로드 -->
       <div>
-        <label for="picture" class="block text-sm font-semibold mb-1 text-gray-300"
-          >사진 업로드</label
-        >
+        <label for="picture" class="block text-base font-semibold mb-1 text-gray-300">
+          사진 업로드
+        </label>
         <input
           id="picture"
           type="file"
           @change="handleFileChange"
           accept="image/*"
-          class="text-sm"
+          class="text-base"
         />
+        <div v-if="previewUrl" class="mt-2">
+          <img :src="previewUrl" alt="미리보기" class="w-32 h-32 object-cover rounded border" />
+        </div>
       </div>
 
       <!-- 장소 선택 -->
       <div>
-        <label for="spot" class="block text-sm font-semibold mb-1 text-gray-300">장소 선택</label>
-        <select v-model="selectedSpot" class="w-full p-2 rounded border text-gray-800" required>
+        <label for="spot" class="block text-base font-semibold mb-1 text-gray-300">장소 선택</label>
+        <select
+          v-model="selectedSpot"
+          class="w-full p-3 rounded border text-gray-800 text-base"
+          required
+        >
           <option :value="null" disabled>장소를 선택하세요</option>
           <option v-for="spot in spots" :key="spot.spotId" :value="spot">{{ spot.name }}</option>
         </select>
@@ -54,7 +61,7 @@
       <div class="flex justify-end">
         <button
           type="submit"
-          class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition"
+          class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded transition text-base font-semibold"
         >
           등록
         </button>
@@ -63,7 +70,7 @@
 
     <!-- 로딩 오버레이 -->
     <div v-if="isLoading" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div class="text-white text-xl font-semibold animate-pulse">등록 중입니다...</div>
+      <div class="text-white text-2xl font-semibold animate-pulse">등록 중입니다...</div>
     </div>
   </div>
 </template>
@@ -78,12 +85,17 @@ const router = useRouter()
 const title = ref('')
 const content = ref('')
 const pictureFile = ref(null)
+const previewUrl = ref('')
 const spots = ref([])
 const selectedSpot = ref(null)
 const isLoading = ref(false)
 
 const handleFileChange = (e) => {
-  pictureFile.value = e.target.files[0]
+  const file = e.target.files[0]
+  pictureFile.value = file
+  if (file) {
+    previewUrl.value = URL.createObjectURL(file)
+  }
 }
 
 onMounted(async () => {

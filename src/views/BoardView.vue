@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen p-6 max-w-5xl mx-auto">
     <!-- 상단 헤더 -->
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-6 mt-8">
       <h2 class="text-2xl font-bold text-white">📌 게시판</h2>
       <button
         @click="goToCreate"

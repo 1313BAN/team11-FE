@@ -31,12 +31,12 @@ const goToNearby = (spot) => {
 // 지도 위에서의 마커 위치 % 수기 매핑
 const positionMap = {
   1: { top: '15%', left: '72%' }, // 정동진
-  2: { top: '46.1%', left: '84%' }, // 호미곶
-  3: { top: '52%', left: '83%' }, // 문무대왕릉
-  4: { top: '57%', left: '80%' }, // 대왕암공원
-  5: { top: '61%', left: '72%' }, // 해동용궁사
-  6: { top: '92%', left: '27%' }, // 성산일출봉
-  7: { top: '15%', left: '23%' }, // 석산곶
+  2: { top: '46.1%', left: '82%' }, // 호미곶
+  3: { top: '52%', left: '81%' }, // 문무대왕릉
+  4: { top: '57%', left: '77%' }, // 대왕암공원
+  5: { top: '59%', left: '72%' }, // 해동용궁사
+  6: { top: '90%', left: '25%' }, // 성산일출봉
+  7: { top: '15%', left: '20%' }, // 석산곶
   8: { top: '13%', left: '38%' }, // 아차산
 }
 
@@ -80,7 +80,7 @@ onMounted(async () => {
           <img
             src="@/assets/marker/marker4.png"
             alt="마커"
-            class="w-6 h-6 object-contain cursor-pointer transition-transform duration-200 hover:scale-125"
+            class="w-9 h-9 object-contain cursor-pointer transition-transform duration-200 hover:scale-125"
           />
 
           <!-- Hover 정보 박스 -->
